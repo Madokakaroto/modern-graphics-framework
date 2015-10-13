@@ -1,0 +1,8 @@
+Debug
+Release
+build
+x64
+*.sdf
+*.opensdf
+*.suo
+.*.swp
