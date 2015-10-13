@@ -1,32 +1,11 @@
 #pragma once
 
 #include "..\resource.hpp"
+#include "forward.hpp"
 #include "detail\texture_subresource.hpp"
 
 namespace leaves { namespace pipeline 
 {
-	struct subresource
-	{
-		uint16_t	mip_level;
-		uint16_t	array_index;
-		uint16_t	width;
-		uint16_t	height;
-		uint16_t	depth;
-		size_t		row_pitch;
-		size_t		slice_pitch;
-		byte*		pointer;
-	};
-
-	struct texture_meta
-	{
-		pixel_format			format;
-		uint16_t				width;
-		uint16_t				height;
-		uint16_t				depth;
-		uint16_t				array_size;
-		bool					has_mipmap;
-	};
-
 	struct texture_traits_base
 	{
 		static constexpr bool is_texture_1d() noexcept
@@ -84,7 +63,7 @@ namespace leaves { namespace pipeline
 			texture_meta const& meta_data,		// meta data
 			device_access cpu_access,			// host access
 			device_access gpu_access)			// device access
-			: base_type(traits_type::type(), name, cpu_access, gpu_access)
+			: base_type(traits_type::type(), std::move(name), cpu_access, gpu_access)
 			, meta_data_(meta_data)
 			, subresources_()
 		{

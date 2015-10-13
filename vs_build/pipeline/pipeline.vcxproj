@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\structured_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\vertex_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\detail\texture_subresource.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\texture\forward.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_1d.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_1d_array.hpp" />
@@ -106,7 +107,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\OpenSourceProject\CML;E:\seasun\DevEnv\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\OpenSourceProject\CML;..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -108,6 +108,9 @@
     <ClInclude Include="..\..\pipeline\state\sampler.hpp">
       <Filter>pipeline\state</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\texture\forward.hpp">
+      <Filter>pipeline\resource\texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pipeline\main.cpp" />

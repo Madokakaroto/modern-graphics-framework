@@ -25,6 +25,7 @@ namespace leaves { namespace pipeline
 	class texture_subresource
 	{
 	public:
+
 		explicit texture_subresource(texture_meta const& meta)
 		{
 			construct(meta.format, meta.width, meta.height, meta.depth, meta.array_size, meta.has_mipmap);

@@ -35,12 +35,13 @@ namespace leaves { namespace pipeline
 	enum class device_access;
 
 	class object;
+
+	template <typename>
 	class resource;
 
 	template <typename Impl>
 	class texture;
-	struct texture_meta;
-	struct subresource;
+
 	class texture_1d;
 	class texture_2d;
 	class texture_3d;
