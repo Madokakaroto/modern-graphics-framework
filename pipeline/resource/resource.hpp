@@ -3,24 +3,10 @@
 #include "..\object.hpp"
 #include "..\mpl.hpp"
 #include "..\math.hpp"
+#include "infrastucture.hpp"
 
 namespace leaves { namespace pipeline 
 {
-	enum class pixel_format
-	{
-		unknown,
-		rgba_32,
-		dc1,
-	};
-
-	enum class device_access
-	{
-		none,
-		read,
-		write,
-		read_write,
-	};
-
 	template <typename Impl>
 	class resource : public object
 	{
@@ -36,6 +22,11 @@ namespace leaves { namespace pipeline
 
 	public:
 		byte const* data() const noexcept
+		{
+			return data_.data();
+		}
+
+		byte* data() noexcept
 		{
 			return data_.data();
 		}
@@ -71,6 +62,12 @@ namespace leaves { namespace pipeline
 		{
 			data_.resize(size);
 			size_ = size;
+		}
+
+		void replace(std::vector<byte>&& other)
+		{
+			data_ = std::move(other);
+			size_ = data_.size();
 		}
 
 	protected:

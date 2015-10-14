@@ -3,8 +3,10 @@
 #include <cstdint>
 #include <cstddef>
 #include <string>
+#include <numeric>
 #include <algorithm>
 #include <tuple>
+#include <array>
 
 namespace leaves { namespace pipeline 
 {

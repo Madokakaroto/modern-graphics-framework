@@ -2,6 +2,18 @@
 
 namespace leaves { namespace pipeline 
 {
+	struct subresource
+	{
+		uint16_t	mip_level;
+		uint16_t	array_index;
+		uint16_t	width;
+		uint16_t	height;
+		uint16_t	depth;
+		size_t		row_pitch;
+		size_t		slice_pitch;
+		byte*		pointer;
+	};
+
 	uint16_t calculate_mipmap_level(uint16_t width, uint16_t height, uint16_t depth)
 	{
 		auto mipmap_level = std::max<uint16_t>(log2_integral(width), log2_integral(height));
@@ -26,9 +38,9 @@ namespace leaves { namespace pipeline
 	{
 	public:
 
-		explicit texture_subresource(texture_meta const& meta)
+		explicit texture_subresource(pixel_format format, uint16_t width, uint16_t height, uint16_t depth, uint16_t array_size, bool mipmap)
 		{
-			construct(meta.format, meta.width, meta.height, meta.depth, meta.array_size, meta.has_mipmap);
+			construct(format, width, height, depth, array_size, mipmap);
 		}
 
 		void construct(pixel_format format, uint16_t width, uint16_t height, uint16_t depth, uint16_t array_size, bool mipmap)

@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\pipeline\mpl.hpp" />
     <ClInclude Include="..\..\pipeline\object.hpp" />
     <ClInclude Include="..\..\pipeline\object_manager.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\constant_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
@@ -32,8 +33,10 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\structured_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\vertex_buffer.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\resource.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\texture.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\detail\texture_subresource.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\forward.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_1d.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_1d_array.hpp" />
@@ -120,7 +123,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\buke\programming\cml-1_0_2;..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CML_DIR);..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

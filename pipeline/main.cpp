@@ -13,5 +13,11 @@ int main(void)
 
 	texture.reset(meta_data_spec);
 
+	std::vector<int> int_array = { 1, 2, 3, 4, 5 };
+	auto iter = int_array.end();
+
+	*iter;
+
+
 	return 0;
 }

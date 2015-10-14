@@ -108,8 +108,17 @@
     <ClInclude Include="..\..\pipeline\state\sampler.hpp">
       <Filter>pipeline\state</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\pipeline\resource\texture\forward.hpp">
-      <Filter>pipeline\resource\texture</Filter>
+    <ClInclude Include="..\..\pipeline\resource\resource.hpp">
+      <Filter>pipeline\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\texture.hpp">
+      <Filter>pipeline\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer.hpp">
+      <Filter>pipeline\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp">
+      <Filter>pipeline\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

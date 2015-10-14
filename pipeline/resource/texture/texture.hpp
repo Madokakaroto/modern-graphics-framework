@@ -1,7 +1,6 @@
 #pragma once
 
 #include "..\resource.hpp"
-#include "forward.hpp"
 #include "detail\texture_subresource.hpp"
 
 namespace leaves { namespace pipeline 
@@ -44,6 +43,16 @@ namespace leaves { namespace pipeline
 		}
 	};
 
+	struct texture_meta
+	{
+		pixel_format			format;
+		uint16_t				width;
+		uint16_t				height;
+		uint16_t				depth;
+		uint16_t				array_size;
+		bool					has_mipmap;
+	};
+
 	template <typename Impl>
 	class texture : public resource<texture<Impl>>
 	{
@@ -75,10 +84,15 @@ namespace leaves { namespace pipeline
 		 */
 		void construct(texture_meta const& meta_data)
 		{
-			texture_subresource ctr{ meta_data };
+			texture_subresource ctr
+			{ 
+				meta_data.format, 
+				meta_data.width, meta_data.height, meta_data.depth, 
+				meta_data.array_size, 
+				meta_data.has_mipmap 
+			};
 			subresources_ = std::move(ctr.move_subres());
-			data_ = std::move(ctr.move_data());
-			size_ = data_.size();
+			replace(std::move(ctr.move_data()));
 		}
 
 	public:
