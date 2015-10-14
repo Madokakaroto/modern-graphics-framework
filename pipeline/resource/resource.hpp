@@ -25,10 +25,10 @@ namespace leaves { namespace pipeline
 	class resource : public object
 	{
 	protected:
-		resource(object_type type, string&& name, device_access cpu_access, device_access gpu_access) noexcept
+		resource(object_type type, string&& name, size_t size, device_access cpu_access, device_access gpu_access) noexcept
 			: object(type, std::move(name))
-			, size_(0)
-			, data_()
+			, size_(size)
+			, data_(size, 0)
 			, cpu_access_(cpu_access)
 			, gpu_access_(gpu_access)
 		{
@@ -49,7 +49,7 @@ namespace leaves { namespace pipeline
 		{
 			return cpu_access_;
 		}
-		
+
 		device_access& cpu_access() noexcept
 		{
 			return cpu_access_;
@@ -63,6 +63,14 @@ namespace leaves { namespace pipeline
 		device_access& gpu_access() noexcept
 		{
 			return gpu_access_;
+		}
+
+	protected:
+
+		void resize(size_t size)
+		{
+			data_.resize(size);
+			size_ = size;
 		}
 
 	protected:

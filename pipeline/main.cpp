@@ -8,7 +8,10 @@ int main(void)
 	using string = leaves::pipeline::string;
 
 	auto meta_data_spec = texture_2d::meta{ pixel_format::rgba_32, 256, 256, true };
-	texture_2d texture{ std::move(string("my texture")), meta_data_spec };
+
+	texture_2d texture{ L"my texture", meta_data_spec };
+
+	texture.reset(meta_data_spec);
 
 	return 0;
 }

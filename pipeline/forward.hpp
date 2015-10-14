@@ -36,27 +36,41 @@ namespace leaves { namespace pipeline
 
 	class object;
 
+	// resource
 	template <typename>
 	class resource;
+		
+		// textures
+		template <typename>
+		class texture;
+			class texture_1d;
+			class texture_2d;
+			class texture_3d;
+			class texture_cube;
+			class texture_1d_array;
+			class texture_2d_array;
+			class texture_cube_array;
+			class texture_rt;			// render target texture
+			class texture_ds;			// depth stencil texture
 
-	template <typename Impl>
-	class texture;
+		// buffer
+		template <typename>
+		class buffer;
+			class vertex_buffer;
+			class index_buffer;
+			class constant_buffer;
+			class structured_buffer;
+			class raw_buffer;
+			class indirect_argument_buffer;
 
-	class texture_1d;
-	class texture_2d;
-	class texture_3d;
-	class texture_cube;
-	class texture_1d_array;
-	class texture_2d_array;
-	class texture_cube_array;
-	class texture_rt;			// render target texture
-	class texture_ds;			// depth stencil texture
+	// graphics states
+	class sampler;
 
-	template <typename Impl>
+	// texture traits
+	template <typename>
 	struct texture_traits;
 
-	template <typename T>
-	struct subresource_traits;
-
-	class sampler;
+	// buffer traits
+	template <typename>
+	struct buffer_traits;
 } }

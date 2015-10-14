@@ -63,7 +63,7 @@ namespace leaves { namespace pipeline
 			texture_meta const& meta_data,		// meta data
 			device_access cpu_access,			// host access
 			device_access gpu_access)			// device access
-			: base_type(traits_type::type(), std::move(name), cpu_access, gpu_access)
+			: base_type(traits_type::type(), std::move(name), 0, cpu_access, gpu_access)
 			, meta_data_(meta_data)
 			, subresources_()
 		{
@@ -78,6 +78,7 @@ namespace leaves { namespace pipeline
 			texture_subresource ctr{ meta_data };
 			subresources_ = std::move(ctr.move_subres());
 			data_ = std::move(ctr.move_data());
+			size_ = data_.size();
 		}
 
 	public:
@@ -112,6 +113,11 @@ namespace leaves { namespace pipeline
 		void reset(meta_data const& meta_data_spec)
 		{
 			auto meta_data = meta_data_spec.to_tex_meta();
+
+			// if meta equals, no construct needed
+			if (::memcmp(&meta_data, &meta_data_, sizeof(texture_meta)) == 0)
+				return;
+
 			construct(meta_data);		// basic guarantee
 			meta_data_ = meta_data;		// no exception(copy assign is with noexcept signature)
 		}
