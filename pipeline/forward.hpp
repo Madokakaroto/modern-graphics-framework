@@ -29,6 +29,8 @@ namespace leaves { namespace pipeline
 #else
 	using string = std::string;
 #endif
+
+	using char_t = string::value_type;
 } }
 
 namespace leaves { namespace pipeline

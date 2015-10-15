@@ -1,6 +1,8 @@
 #include <iostream>
 #include <pipeline\resource\buffer\vertex_buffer.hpp>
 
+#include <fstream>
+
 struct begin_with
 {
 	float a[9];

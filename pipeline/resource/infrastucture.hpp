@@ -51,6 +51,11 @@ namespace leaves { namespace pipeline
 		color1,
 	};
 
+	enum class primative_type
+	{
+
+	};
+
 	size_t size_of(pixel_format format) noexcept
 	{
 		return 0;
