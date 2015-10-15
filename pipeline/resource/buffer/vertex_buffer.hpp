@@ -27,7 +27,12 @@ namespace leaves { namespace pipeline
 
 		void add(data_format format, data_semantic semantic) noexcept
 		{
-			auto offset = attributes_.empty() ? 0 : attributes_.back().offset + size_of(format);
+			size_t offset = 0;
+			if (!attributes_.empty())
+			{
+				auto const& back = attributes_.back();
+				offset = back.offset + size_of(back.format);
+			}
 			attributes_.push_back({ format, semantic, offset });
 		}
 
@@ -74,26 +79,34 @@ namespace leaves { namespace pipeline
 		template <typename T>
 		class iterator
 		{
-			static_assert(std::is_pod<T>::value, "");
 		public:
-			iterator(byte* data, byte* end, size_t offset)
+			// adapt to stl
+			using iterator_category = std::random_access_iterator_tag;
+			using value_type = T;
+			using reference = value_type&;
+			using const_reference = value_type const&;
+			using pointer = T*;
+			using const_pointer = T const*;
+			using difference_type = std::ptrdiff_t;
+		public:
+			iterator(byte* data, byte* end, size_t offset, std::ptrdiff_t stride)
 				: data_(data + offset)
+				, begin_(data_)
 				, end_(end + offset)
-				, offset_(offset)
+				, stride_(offset)
 			{
 
 			}
 			
 			T& operator*()
 			{
-				throw_if_overflow()
+				throw_if_access_violate();
 				return *reinterpret_cast<T*>(data_);
 			}
 
 			iterator& operator++() // preincrement
 			{
-				throw_if_overflow();
-				data_ += offset_;
+				data_ = throw_if_range_error(offset_);
 				return *this;
 			}
 
@@ -106,31 +119,77 @@ namespace leaves { namespace pipeline
 
 			iterator& operator--() // predecrement
 			{
-				throw_if_overflow();
-
-				data_ -= offset_;
+				data_ = throw_if_range_error(-stride_);
 				return *this;
 			}
 
-			iterator operator--(int) // predecrement
+			iterator operator--(int) // postdecrement
 			{
 				iterator tmp = *this;
 				--*this;
 				return tmp;
 			}
 
-		private:
-
-			void throw_if_overflow() const
+			iterator& operator += (int count)
 			{
-				if (nullptr == data_ && data_ >= end_)
-					throw std::overflow_error{};
+				data_ = throw_if_range_error(count * stride_);
+				return *this;
+			}
+
+			iterator operator+(int count)
+			{
+				iterator tmp = *this;
+				return tmp += count;
+			}
+
+			iterator& operator -= (int count)
+			{
+				return *this += (-count);
+			}
+
+			iterator operator-(int count)
+			{
+				iterator tmp = *this;
+				return tmp -= count;
+			}
+
+			bool operator== (iterator const& rhs) const noexcept
+			{
+				// not safe but effective
+				return data_ == rhs.data_;
+			}
+
+			bool operator!= (iterator const& rhs) const noexcept
+			{
+				return !(*this == rhs);
+			}
+
+			bool operator< (iterator const& rhs) const noexcept
+			{
+				return data_ < rhs.data_;
 			}
 
 		private:
-			byte*	data_;
-			byte*   end_;
-			size_t	offset_;
+
+			void throw_if_access_violate() const
+			{
+				if (nullptr == data_ || data_ >= end_ || data_ < begin_)
+					throw std::exception{"access violation"};
+			}
+
+			byte* throw_if_range_error(std::ptrdiff_t diff) const
+			{
+				auto tmp = data_ + diff;
+				if (nullptr == data_ || tmp > end_ || tmp < begin_)
+					throw std::range_error{"range error"};
+				return tmp;
+			}
+
+		private:
+			byte*			data_;
+			byte*			begin_;
+			byte*			end_;
+			difference_type	stride_;
 		};
 
 	public:
@@ -148,29 +207,78 @@ namespace leaves { namespace pipeline
 			layout_ = std::move(meta_data);
 		}
 
-		template <typename T>
+		template <typename P>
 		auto begin(data_semantic semantic)
 		{
-			decltype(auto) attr = layout_.find(semantic);
+			auto& attr = layout_.find(semantic);
 
-			if (sizeof(T) != size_of(attr.format))
+			if (sizeof(P) != size_of(attr.format))
 				throw std::exception{};
 
-			using iterator_type = iterator<T>;
-			return iterator_type{ data(), data() + size(), attr.offset };
+			using iterator_type = iterator<P>;
+			return iterator_type{ data(), data() + size(), attr.offset, static_cast<std::ptrdiff_t>(elem_size()) };
 		}
 
-		template <typename T>
+		template <typename P>
 		auto end(data_semantic semantic)
 		{
-			decltype(auto) attr = layout_.find(semantic);
+			auto& attr = layout_.find(semantic);
 
-			if (sizeof(T) != size_of(attr.format))
+			if (sizeof(P) != size_of(attr.format))
 				throw std::exception{};
 
-			using iterator_type = iterator<T>;
+			using iterator_type = iterator<P>;
 			auto ptr = data() + size();
-			return iterator_type{ ptr, ptr, attr.offset };
+			return iterator_type{ ptr, ptr, attr.offset, static_cast<std::ptrdiff_t>(elem_size()) };
+		}
+
+		template <typename P>
+		auto begin()
+		{
+			if(sizeof(P) != elem_size())
+				throw std::exception{};
+
+			using iterator_type = iterator<P>;
+			return iterator_type{ data(), data() + size(), 0, sizeof(P) };
+		}
+
+		template <typename P>
+		auto end()
+		{
+			if (sizeof(P) != elem_size())
+				throw std::exception{};
+
+			using iterator_type = iterator<P>;
+			auto ptr = data() + size();
+			return iterator_type{ ptr, ptr, 0, sizeof(P) };
+		}
+
+		template <typename P>
+		auto get()
+		{
+			static_assert(!std::is_reference<P>::value, "Can`t be cast to a reference type");
+
+			using under = std::remove_cv_t<std::remove_pointer<P> >;
+			using type = std::add_pointer_t<P>;
+
+			if (sizeof(P) != elem_size())
+				throw std::exception{};
+			
+			return reinterpret_cast<P*>(data());
+		}
+
+		template <typename P>
+		auto get() const
+		{
+			static_assert(!std::is_reference<P>::value, "Can`t be cast to a reference type");
+
+			using under = std::remove_cv_t<std::remove_pointer<P> >;
+			using type = std::add_pointer_t<std::add_const_t<P> >;
+
+			if (sizeof(P) != elem_size())
+				throw std::exception{};
+			
+			return reinterpret_cast<type>(data());
 		}
 
 	private:

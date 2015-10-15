@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <tuple>
 #include <array>
+#include <stdexcept>
 
 namespace leaves { namespace pipeline 
 {

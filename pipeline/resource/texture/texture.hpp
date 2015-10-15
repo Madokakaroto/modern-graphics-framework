@@ -108,7 +108,7 @@ namespace leaves { namespace pipeline
 		/*
 		 * iterate through all subresources
 		 */
-		auto subres_begin() noexcept
+		auto begin() noexcept
 		{
 			return subresources_.begin();
 		}
@@ -116,7 +116,7 @@ namespace leaves { namespace pipeline
 		/*
 		 * iterate through all subresources
 		 */
-		auto subres_end() noexcept
+		auto end() noexcept
 		{
 			return subresources_.end();
 		}

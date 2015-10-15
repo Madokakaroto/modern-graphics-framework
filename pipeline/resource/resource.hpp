@@ -31,7 +31,7 @@ namespace leaves { namespace pipeline
 			return data_.data();
 		}
 
-		byte size() const noexcept
+		size_t size() const noexcept
 		{
 			return size_;
 		}
