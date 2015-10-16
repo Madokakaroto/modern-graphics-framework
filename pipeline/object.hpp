@@ -3,6 +3,8 @@
 #include <string>
 #include <memory>
 #include "forward.hpp"
+#include "mpl.hpp"
+#include "math.hpp"
 
 namespace leaves { namespace pipeline 
 {

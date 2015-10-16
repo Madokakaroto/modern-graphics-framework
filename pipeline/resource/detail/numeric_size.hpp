@@ -1,6 +1,6 @@
 #pragma once
 
-namespace leaves { namespace pipeline 
+namespace leaves { namespace pipeline
 {
 	namespace detail
 	{

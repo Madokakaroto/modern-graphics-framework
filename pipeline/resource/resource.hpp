@@ -1,9 +1,9 @@
 #pragma once
-#include <vector>
+
 #include "..\object.hpp"
-#include "..\mpl.hpp"
-#include "..\math.hpp"
 #include "infrastucture.hpp"
+#include "detail\numeric_size.hpp"
+#include "variable.hpp"
 
 namespace leaves { namespace pipeline 
 {

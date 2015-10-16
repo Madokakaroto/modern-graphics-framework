@@ -28,12 +28,12 @@
     <ClInclude Include="..\..\pipeline\resource\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\constant_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\detail\size_of.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\structured_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\vertex_buffer.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\detail\numeric_size.hpp" />
     <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp" />
     <ClInclude Include="..\..\pipeline\resource\resource.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture.hpp" />
@@ -48,6 +48,7 @@
     <ClInclude Include="..\..\pipeline\resource\texture\texture_cube_array.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_ds.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_rt.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\variable.hpp" />
     <ClInclude Include="..\..\pipeline\shader\shader.hpp" />
     <ClInclude Include="..\..\pipeline\state\sampler.hpp" />
     <ClInclude Include="..\..\pipeline\variant.hpp" />

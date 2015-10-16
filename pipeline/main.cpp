@@ -30,7 +30,7 @@ int main(void)
 
 	index_buffer ib{ L"my index buffer", primitive_type::triangle_list_adj, data_format::uint, 16 };
 
-	auto ptr_ib = ib.ptr_as<leaves::pipeline::uint32_t const>();
+	auto ptr_ib = ib.ptr_as<leaves::uint32_t const>();
 
 	// copy data
 	auto data = vb.data();

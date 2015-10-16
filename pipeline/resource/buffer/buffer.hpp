@@ -1,7 +1,6 @@
 #pragma once
 
 #include "..\resource.hpp"
-#include "detail\size_of.hpp"
 
 namespace leaves { namespace pipeline 
 {
@@ -11,7 +10,7 @@ namespace leaves { namespace pipeline
 		using base_type = resource<buffer<Impl>>;
 		using traits_type = buffer_traits<Impl>;
 
-	public:
+	protected:
 		buffer(
 			string&& name,				// resource name 
 			size_t elem_size,			// element size 
@@ -34,8 +33,6 @@ namespace leaves { namespace pipeline
 		{
 			return element_count_;
 		}
-
-	protected:
 
 		void resize(size_t elem_size, size_t elem_count)
 		{

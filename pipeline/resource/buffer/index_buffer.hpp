@@ -80,7 +80,7 @@ namespace leaves { namespace pipeline
 		auto ptr_as()
 		{
 			using type = std::add_pointer_t<T>;
-			return const_cast<type>(const_cast<const index_buffer*>(this)->ptr_as<T>());
+			return const_cast<type>(const_cast<index_buffer const*>(this)->ptr_as<T>());
 		}
 
 		template <typename T, typename = std::enable_if_t<std::is_integral<T>::value> >
@@ -104,8 +104,8 @@ namespace leaves { namespace pipeline
 		}
 
 	private:
-		primitive_type	primitive_;
-		data_format		format_;
-		size_t			primitive_count_;
+		primitive_type		primitive_;
+		data_format			format_;
+		size_t				primitive_count_;
 	};
 } }

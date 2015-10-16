@@ -8,8 +8,10 @@
 #include <tuple>
 #include <array>
 #include <stdexcept>
+#include <vector>
+#include <list>
 
-namespace leaves { namespace pipeline 
+namespace leaves
 {
 	using int8_t	= std::int8_t;
 	using int16_t	= std::int16_t;
@@ -31,7 +33,7 @@ namespace leaves { namespace pipeline
 #endif
 
 	using char_t = string::value_type;
-} }
+}
 
 namespace leaves { namespace pipeline
 {
