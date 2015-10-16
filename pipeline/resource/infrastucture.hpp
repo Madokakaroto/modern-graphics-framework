@@ -51,34 +51,48 @@ namespace leaves { namespace pipeline
 		color1,
 	};
 
-	enum class primative_type
+	enum class primitive_type
 	{
-
+		point_list,
+		line_list,
+		line_strip,
+		triangle_list,
+		triangle_strip,
+		line_list_adj,
+		line_strip_adj,
+		triangle_list_adj,
+		triangle_strip_adj,
+		control_point_1,
+		control_point_2,
+		control_point_3,
+		control_point_4,
+		control_point_5,
+		control_point_6,
+		control_point_7,
+		control_point_8,
+		control_point_9,
+		control_point_10,
+		control_point_11,
+		control_point_12,
+		control_point_13,
+		control_point_14,
+		control_point_15,
+		control_point_16,
+		control_point_17,
+		control_point_18,
+		control_point_19,
+		control_point_20,
+		control_point_21,
+		control_point_22,
+		control_point_23,
+		control_point_24,
+		control_point_25,
+		control_point_26,
+		control_point_27,
+		control_point_28,
+		control_point_29,
+		control_point_30,
+		control_point_31,
+		control_point_32,
 	};
-
-	size_t size_of(pixel_format format) noexcept
-	{
-		return 0;
-	}
-
-	size_t size_of(data_format format) noexcept
-	{
-		switch (format)
-		{
-		case data_format::float2:
-		case data_format::int2:
-		case data_format::uint2:
-			return 8;
-		case data_format::float3:
-		case data_format::int3:
-		case data_format::uint3:
-			return 12;
-		case data_format::float4:
-		case data_format::int4:
-		case data_format::uint4:
-			return 16;
-		default:
-			return 4;
-		}
-	}
 } }

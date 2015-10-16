@@ -28,6 +28,7 @@
     <ClInclude Include="..\..\pipeline\resource\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\constant_buffer.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\detail\size_of.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />

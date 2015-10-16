@@ -25,6 +25,9 @@
     <Filter Include="pipeline\resource\texture\detail">
       <UniqueIdentifier>{f390029e-a4c8-4b24-92c4-f626f8ed3d73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pipeline\resource\buffer\detail">
+      <UniqueIdentifier>{a8266fc7-e56f-401d-bcfe-ec0a4a7121e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pipeline\forward.hpp">
@@ -119,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp">
       <Filter>pipeline\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\detail\size_of.hpp">
+      <Filter>pipeline\resource\buffer\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\resource.hpp"
+#include "detail\size_of.hpp"
 
 namespace leaves { namespace pipeline 
 {

@@ -31,7 +31,7 @@ namespace leaves { namespace pipeline
 			if (!attributes_.empty())
 			{
 				auto const& back = attributes_.back();
-				offset = back.offset + size_of(back.format);
+				offset = back.offset + detail::size_of(back.format);
 			}
 			attributes_.push_back({ format, semantic, offset });
 		}
@@ -54,7 +54,7 @@ namespace leaves { namespace pipeline
 		{
 			return std::accumulate(attributes_.begin(), attributes_.end(), size_t{0}, [](size_t sum, attribute const& attr)
 			{
-				return sum + size_of(attr.format);
+				return sum + detail::size_of(attr.format);
 			});
 		}
 
@@ -88,6 +88,7 @@ namespace leaves { namespace pipeline
 			using pointer = T*;
 			using const_pointer = T const*;
 			using difference_type = std::ptrdiff_t;
+
 		public:
 			iterator(byte* data, byte* end, size_t offset, std::ptrdiff_t stride)
 				: data_(data + offset)
@@ -170,7 +171,6 @@ namespace leaves { namespace pipeline
 			}
 
 		private:
-
 			void throw_if_access_violate() const
 			{
 				if (nullptr == data_ || data_ >= end_ || data_ < begin_)
@@ -200,6 +200,13 @@ namespace leaves { namespace pipeline
 		{
 		}
 
+		// attribute access
+		input_layout const& layout() const noexcept
+		{
+			return layout_;
+		}
+
+		// attribute modify
 		void resize(input_layout&& meta_data, size_t count)
 		{
 			auto elem_size = meta_data.size();
@@ -207,75 +214,69 @@ namespace leaves { namespace pipeline
 			layout_ = std::move(meta_data);
 		}
 
-		template <typename P>
+		// content access
+		template <typename T>
 		auto begin(data_semantic semantic)
 		{
 			auto& attr = layout_.find(semantic);
 
-			if (sizeof(P) != size_of(attr.format))
+			if (sizeof(T) != size_of(attr.format))
 				throw std::exception{};
 
-			using iterator_type = iterator<P>;
+			using iterator_type = iterator<T>;
 			return iterator_type{ data(), data() + size(), attr.offset, static_cast<std::ptrdiff_t>(elem_size()) };
 		}
 
-		template <typename P>
+		template <typename T>
 		auto end(data_semantic semantic)
 		{
 			auto& attr = layout_.find(semantic);
 
-			if (sizeof(P) != size_of(attr.format))
+			if (sizeof(T) != size_of(attr.format))
 				throw std::exception{};
 
-			using iterator_type = iterator<P>;
+			using iterator_type = iterator<T>;
 			auto ptr = data() + size();
 			return iterator_type{ ptr, ptr, attr.offset, static_cast<std::ptrdiff_t>(elem_size()) };
 		}
 
-		template <typename P>
+		template <typename T>
 		auto begin()
 		{
-			if(sizeof(P) != elem_size())
+			if(sizeof(T) != elem_size())
 				throw std::exception{};
 
 			using iterator_type = iterator<P>;
-			return iterator_type{ data(), data() + size(), 0, sizeof(P) };
+			return iterator_type{ data(), data() + size(), 0, sizeof(T) };
 		}
 
-		template <typename P>
+		template <typename T>
 		auto end()
 		{
-			if (sizeof(P) != elem_size())
+			if (sizeof(T) != elem_size())
 				throw std::exception{};
 
-			using iterator_type = iterator<P>;
+			using iterator_type = iterator<T>;
 			auto ptr = data() + size();
-			return iterator_type{ ptr, ptr, 0, sizeof(P) };
+			return iterator_type{ ptr, ptr, 0, sizeof(T) };
 		}
 
-		template <typename P>
-		auto get()
+		template <typename T>
+		auto ptr_as()
 		{
-			static_assert(!std::is_reference<P>::value, "Can`t be cast to a reference type");
-
-			using under = std::remove_cv_t<std::remove_pointer<P> >;
-			using type = std::add_pointer_t<P>;
-
-			if (sizeof(P) != elem_size())
-				throw std::exception{};
-			
-			return reinterpret_cast<P*>(data());
+			using type = std::add_pointer_t<T>;
+			return const_cast<type>(const_cast<vertex_buffer const*>(this)->ptr_as<T>());
 		}
 
-		template <typename P>
-		auto get() const
+		template <typename T>
+		auto ptr_as() const
 		{
-			static_assert(!std::is_reference<P>::value, "Can`t be cast to a reference type");
+			static_assert(!std::is_reference<T>::value, "Can`t be cast to a reference type");
 
-			using under = std::remove_cv_t<std::remove_pointer<P> >;
-			using type = std::add_pointer_t<std::add_const_t<P> >;
+			using under = std::remove_cv_t<std::remove_pointer<T>>;
+			using type = std::add_pointer_t<std::add_const_t<T>>;
 
-			if (sizeof(P) != elem_size())
+			if (sizeof(T) != elem_size())
 				throw std::exception{};
 			
 			return reinterpret_cast<type>(data());

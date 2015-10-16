@@ -1,5 +1,6 @@
 #include <iostream>
 #include <pipeline\resource\buffer\vertex_buffer.hpp>
+#include <pipeline\resource\buffer\index_buffer.hpp>
 
 #include <fstream>
 
@@ -11,10 +12,12 @@ struct begin_with
 int main(void)
 {
 	using vertex_buffer = leaves::pipeline::vertex_buffer;
+	using index_buffer = leaves::pipeline::index_buffer;
 	using input_layout = leaves::pipeline::input_layout;
 	using data_format = leaves::pipeline::data_format;
 	using data_semantic = leaves::pipeline::data_semantic;
 	using device_access = leaves::pipeline::device_access;
+	using primitive_type = leaves::pipeline::primitive_type;
 
 	using float4 = leaves::float4;
 
@@ -25,11 +28,12 @@ int main(void)
 
 	vertex_buffer vb{ L"my vertex buffer", std::move(layout), 4 };
 
+	index_buffer ib{ L"my index buffer", primitive_type::triangle_list_adj, data_format::uint, 16 };
+
+	auto ptr_ib = ib.ptr_as<leaves::pipeline::uint32_t const>();
+
+	// copy data
 	auto data = vb.data();
-	auto begin = vb.begin<float4>(data_semantic::position);
-	auto end = vb.end<float4>(data_semantic::position);
 
-	auto whole_begin = vb.begin<float4>();
-
-	auto ptr = vb.get<const begin_with>();
+	auto ptr_vb = vb.ptr_as<begin_with>();
 }
