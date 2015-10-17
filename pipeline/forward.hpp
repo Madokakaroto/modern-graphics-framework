@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <vector>
 #include <list>
+#include <cassert>
 
 namespace leaves
 {
