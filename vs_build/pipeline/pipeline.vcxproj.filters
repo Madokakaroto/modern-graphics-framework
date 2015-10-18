@@ -28,6 +28,9 @@
     <Filter Include="pipeline\resource\detail">
       <UniqueIdentifier>{3a02b45b-08ca-4b49-a63c-1a6f9229081e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pipeline\resource\buffer\layout">
+      <UniqueIdentifier>{1d2d4096-8bf7-4e81-8411-7b36e1678c0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\pipeline\forward.hpp">
@@ -128,6 +131,15 @@
     </ClInclude>
     <ClInclude Include="..\..\pipeline\resource\variable.hpp">
       <Filter>pipeline\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp">
+      <Filter>pipeline\resource\buffer\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\structured_layout.hpp">
+      <Filter>pipeline\resource\buffer\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_variable.hpp">
+      <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,9 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\constant_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_variable.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\structured_layout.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\structured_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\vertex_buffer.hpp" />

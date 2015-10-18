@@ -4,12 +4,12 @@ namespace leaves { namespace pipeline
 {
 	namespace detail
 	{
-		size_t size_of(pixel_format format) noexcept
+		uint16_t size_of(pixel_format format) noexcept
 		{
 			return 0;
 		}
 
-		size_t size_of(data_format format) noexcept
+		uint16_t size_of(data_format format) noexcept
 		{
 			switch (format)
 			{
@@ -30,7 +30,7 @@ namespace leaves { namespace pipeline
 			}
 		}
 
-		static size_t count_of(primitive_type primitive, size_t primitive_count)
+		static size_t count_of(primitive_type primitive, size_t primitive_count) noexcept
 		{
 			switch (primitive)
 			{
@@ -52,6 +52,11 @@ namespace leaves { namespace pipeline
 			default: //primitive_type::point_list:
 				return primitive_count;
 			}
+		}
+
+		static uint16_t aligned_size(data_format format, uint16_t count, uint16_t size = 0) noexcept
+		{
+			return 0;
 		}
 	}
 } }

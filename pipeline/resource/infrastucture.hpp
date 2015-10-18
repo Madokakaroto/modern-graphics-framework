@@ -31,7 +31,8 @@ namespace leaves { namespace pipeline
 		uint,
 		uint2,
 		uint3,
-		uint4
+		uint4,
+		structured,
 	};
 
 	enum class device_access
