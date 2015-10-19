@@ -31,6 +31,7 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\iterator.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_traits.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_variable.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\structured_layout.hpp" />
@@ -52,7 +53,6 @@
     <ClInclude Include="..\..\pipeline\resource\texture\texture_cube_array.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_ds.hpp" />
     <ClInclude Include="..\..\pipeline\resource\texture\texture_rt.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\variable.hpp" />
     <ClInclude Include="..\..\pipeline\shader\shader.hpp" />
     <ClInclude Include="..\..\pipeline\state\sampler.hpp" />
   </ItemGroup>

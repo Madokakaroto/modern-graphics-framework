@@ -49,6 +49,8 @@ void test_vertex_buffer()
 	vertex_buffer vb{ L"my vertex buffer", std::move(layout), 4 };
 
 	auto ptr = vb.ptr_as<begin_with>();
+	auto begin = vb.begin<float4>(data_semantic::color0);
+	auto end = vb.end<float4>(data_semantic::color0);
 }
 
 void test_index_buffer()
@@ -60,13 +62,14 @@ void test_index_buffer()
 	index_buffer ib{ L"my index buffer", primitive_type::triangle_list_adj, data_format::uint, 16 };
 
 	auto ptr = ib.ptr_as<uint32_t>();
+	auto begin = ib.begin<uint16_t>();
+	auto end = ib.end<uint16_t>();
 }
 
 void test_constant_buffer()
 {
 	using constant_buffer = leaves::pipeline::constant_buffer;
 	using structured_layout = leaves::pipeline::structured_layout;
-	using data_format = leaves::pipeline::data_format;
 	using leaves::pipeline::wrap_large_class;
 
 	structured_layout layout = wrap_large_class<cbuffer_host>();

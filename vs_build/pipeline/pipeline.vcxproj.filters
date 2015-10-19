@@ -126,9 +126,6 @@
     <ClInclude Include="..\..\pipeline\resource\detail\numeric_size.hpp">
       <Filter>pipeline\resource\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\pipeline\resource\variable.hpp">
-      <Filter>pipeline\resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp">
       <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
@@ -139,6 +136,9 @@
       <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_traits.hpp">
+      <Filter>pipeline\resource\buffer\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\iterator.hpp">
       <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
   </ItemGroup>

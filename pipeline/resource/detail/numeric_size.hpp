@@ -111,5 +111,19 @@ namespace leaves { namespace pipeline
 				return 4;
 			}
 		}
+
+		static bool is_signed(data_format format) noexcept
+		{
+			switch (format)
+			{
+			case data_format::uint:
+			case data_format::uint2:
+			case data_format::uint3:
+			case data_format::uint4:
+				return false;
+			default:
+				return true;
+			}
+		}
 	}
 } }

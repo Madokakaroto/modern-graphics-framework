@@ -17,7 +17,9 @@ namespace leaves { namespace pipeline
 	{
 	public:
 		using base_type = buffer<index_buffer>;
-		using traits_type = buffer_traits<index_buffer>;
+		
+		template <typename T>
+		using iterator = stream_buffer_iterator<T>;
 
 	public:
 		// construct
@@ -73,6 +75,30 @@ namespace leaves { namespace pipeline
 		void resize(size_t primitive_count)
 		{
 			resize(primitive_, format_, primitive_count);
+		}
+
+		template <typename T>
+		auto begin()
+		{
+			static_assert(std::is_integral<T>::value, "Can only be integral type!");
+
+			if (std::is_signed<T>::value != detail::is_signed(format_) &&
+				sizeof(T) != detail::size_of(format_))
+				throw std::exception{};
+
+			return reinterpret_cast<T*>(data());
+		}
+
+		template <typename T>
+		auto end()
+		{
+			static_assert(std::is_integral<T>::value, "Can only be integral type!");
+
+			if (std::is_signed<T>::value != detail::is_signed(format_) &&
+				sizeof(T) != detail::size_of(format_))
+				throw std::exception{};
+
+			return reinterpret_cast<T*>(data() + size());
 		}
 
 	private:
