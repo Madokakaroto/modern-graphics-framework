@@ -4,6 +4,11 @@ namespace leaves { namespace pipeline
 {
 	namespace detail
 	{
+		static uint16_t align(uint16_t size) noexcept
+		{
+			return (size & 0xFFF0) + (((size & 0x000F) != 0) << 4);
+		}
+
 		uint16_t size_of(pixel_format format) noexcept
 		{
 			return 0;
@@ -70,9 +75,41 @@ namespace leaves { namespace pipeline
 			}
 		}
 
-		static uint16_t aligned_size(data_format format, uint16_t count, uint16_t size = 0) noexcept
+		static uint16_t size_of(data_format format, uint16_t count, uint16_t size = 0) noexcept
 		{
-			return 0;
+			auto data_size = size_of(format);
+
+			if (data_format::structured == format)
+				data_size = size;
+			
+			if (count > 1)
+				data_size = align(size) * count;
+
+			return data_size;
+		}
+
+		static uint16_t reg_size(data_format format, uint16_t count) noexcept
+		{
+			if (count > 1)
+				return 4;
+
+			switch (format)
+			{
+			case data_format::int_:
+			case data_format::uint:
+			case data_format::float_:
+				return 1;
+			case data_format::int2:
+			case data_format::uint2:
+			case data_format::float2:
+				return 2;
+			case data_format::int3:
+			case data_format::uint3:
+			case data_format::float3:
+				return 3;
+			default:
+				return 4;
+			}
 		}
 	}
 } }

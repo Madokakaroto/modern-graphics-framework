@@ -55,7 +55,6 @@
     <ClInclude Include="..\..\pipeline\resource\variable.hpp" />
     <ClInclude Include="..\..\pipeline\shader\shader.hpp" />
     <ClInclude Include="..\..\pipeline\state\sampler.hpp" />
-    <ClInclude Include="..\..\pipeline\variant.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pipeline\main.cpp" />

@@ -75,27 +75,6 @@ namespace leaves { namespace pipeline
 			resize(primitive_, format_, primitive_count);
 		}
 
-		// content access
-		template <typename T>
-		auto ptr_as()
-		{
-			using type = std::add_pointer_t<T>;
-			return const_cast<type>(const_cast<index_buffer const*>(this)->ptr_as<T>());
-		}
-
-		template <typename T, typename = std::enable_if_t<std::is_integral<T>::value> >
-		auto ptr_as() const
-		{
-			using under = std::remove_cv_t<std::remove_pointer<T>>;
-			using type = std::add_pointer_t<std::add_const_t<T>>;
-
-			if (sizeof(T) != elem_size())
-				throw std::exception{};
-
-			return reinterpret_cast<type>(data());
-		}
-
-
 	private:
 		static void throw_if_invalid_format(data_format format)
 		{

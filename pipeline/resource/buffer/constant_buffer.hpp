@@ -14,17 +14,30 @@ namespace leaves{ namespace pipeline
 		}
 	};
 
-	// recursive member
-	struct complexed_layout
-	{
-
-	};
-
 	class constant_buffer : public buffer<constant_buffer>
 	{
 		using base_type = buffer<constant_buffer>;
 	public:
+		constant_buffer(string&& name, structured_layout&& layout)
+			: base_type(std::move(name), layout.size(), 1, device_access::write, device_access::read)
+			, layout_(std::move(layout))
+		{
 
+		}
 
+		void resize(structured_layout&& layout)
+		{
+			auto elem_size = layout.size();
+			base_type::resize(elem_size, 1);
+			layout_ = std::move(layout);
+		}
+
+		auto operator[](size_t index) const
+		{
+			return numeric_variable(layout_[index], data());
+		}
+
+	private:
+		structured_layout		layout_;
 	};
 } }

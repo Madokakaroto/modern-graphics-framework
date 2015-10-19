@@ -204,27 +204,6 @@ namespace leaves { namespace pipeline
 			return iterator_type{ ptr, ptr, 0, sizeof(T) };
 		}
 
-		template <typename T>
-		auto ptr_as()
-		{
-			using type = std::add_pointer_t<T>;
-			return const_cast<type>(const_cast<vertex_buffer const*>(this)->ptr_as<T>());
-		}
-
-		template <typename T>
-		auto ptr_as() const
-		{
-			static_assert(!std::is_reference<T>::value, "Can`t be cast to a reference type");
-
-			using under = std::remove_cv_t<std::remove_pointer<T>>;
-			using type = std::add_pointer_t<std::add_const_t<T>>;
-
-			if (sizeof(T) != elem_size())
-				throw std::exception{};
-			
-			return reinterpret_cast<type>(data());
-		}
-
 	private:
 		input_layout	layout_;
 	};

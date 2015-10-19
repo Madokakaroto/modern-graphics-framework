@@ -10,7 +10,7 @@ namespace leaves { namespace pipeline
 		{
 			data_format		format;
 			data_semantic	semantic;
-			size_t			offset;
+			uint16_t		offset;
 		};
 
 		static constexpr size_t attribute_count = 16;
@@ -25,7 +25,7 @@ namespace leaves { namespace pipeline
 
 		void add(data_format format, data_semantic semantic) noexcept
 		{
-			size_t offset = 0;
+			uint16_t offset = 0;
 			if (!attributes_.empty())
 			{
 				auto const& back = attributes_.back();
@@ -48,12 +48,13 @@ namespace leaves { namespace pipeline
 			});
 		}
 
-		size_t size() const noexcept
+		uint16_t size() const noexcept
 		{
-			return std::accumulate(attributes_.begin(), attributes_.end(), size_t{ 0 }, [](size_t sum, attribute const& attr)
-			{
-				return sum + detail::size_of(attr.format);
-			});
+			if (attributes_.empty())
+				return 0;
+
+			auto& back = attributes_.back();
+			return back.offset + detail::size_of(back.format);
 		}
 
 	private:

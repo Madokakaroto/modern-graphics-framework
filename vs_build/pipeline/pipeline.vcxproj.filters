@@ -48,9 +48,6 @@
     <ClInclude Include="..\..\pipeline\object_manager.hpp">
       <Filter>pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\pipeline\variant.hpp">
-      <Filter>pipeline</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\pipeline\effect\effect.hpp">
       <Filter>pipeline\effect</Filter>
     </ClInclude>

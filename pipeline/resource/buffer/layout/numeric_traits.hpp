@@ -74,7 +74,7 @@ namespace leaves { namespace pipeline
 	template <typename T>
 	struct numeric_traits : detail::numeric_traits_base<T>
 	{
-		static constexpr uint16 count()
+		static constexpr uint16_t count()
 		{
 			return 1;
 		}
@@ -83,7 +83,7 @@ namespace leaves { namespace pipeline
 	template <typename T, size_t N>
 	struct numeric_traits<T[N]> : detail::numeric_traits_base<T>
 	{
-		static constexpr uint16 count()
+		static constexpr uint16_t count()
 		{
 			return N;
 		}

@@ -3,7 +3,6 @@
 #include "..\object.hpp"
 #include "infrastucture.hpp"
 #include "detail\numeric_size.hpp"
-#include "variable.hpp"
 
 namespace leaves { namespace pipeline 
 {
