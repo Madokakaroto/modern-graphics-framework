@@ -1,5 +1,7 @@
 #pragma once
 
+#include "numeric_traits.hpp"
+
 namespace leaves { namespace pipeline 
 {
 	class variable_layout

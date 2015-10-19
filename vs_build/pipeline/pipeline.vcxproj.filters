@@ -141,6 +141,9 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_variable.hpp">
       <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_traits.hpp">
+      <Filter>pipeline\resource\buffer\layout</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pipeline\main.cpp" />

@@ -31,6 +31,7 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp" />
+    <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_traits.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\numeric_variable.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\structured_layout.hpp" />
     <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />
@@ -128,7 +129,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(CML_DIR);..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CML_DIR);..\..\;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

@@ -13,6 +13,10 @@ namespace leaves { namespace pipeline
 		{
 			switch (format)
 			{
+			case data_format::float_:
+			case data_format::int_:
+			case data_format::uint:
+				return 4;
 			case data_format::float2:
 			case data_format::int2:
 			case data_format::uint2:
@@ -25,8 +29,20 @@ namespace leaves { namespace pipeline
 			case data_format::int4:
 			case data_format::uint4:
 				return 16;
+			case data_format::float2x2:
+			case data_format::float3x2:
+			case data_format::float4x2:
+				return 32;
+			case data_format::float2x3:
+			case data_format::float3x3:
+			case data_format::float4x3:
+				return 48;
+			case data_format::float2x4:
+			case data_format::float3x4:
+			case data_format::float4x4:
+				return 64;
 			default:
-				return 4;
+				return 0;
 			}
 		}
 
