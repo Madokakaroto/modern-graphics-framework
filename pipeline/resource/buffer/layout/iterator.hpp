@@ -33,7 +33,7 @@ namespace leaves { namespace pipeline
 
 		stream_buffer_iterator& operator++() // preincrement
 		{
-			data_ = throw_if_range_error(offset_);
+			data_ = throw_if_range_error(stride_);
 			return *this;
 		}
 
