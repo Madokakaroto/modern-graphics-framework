@@ -10,13 +10,15 @@ namespace leaves { namespace pipeline
 	class resource : public object
 	{
 	protected:
-		resource(object_type type, string&& name, size_t size, device_access cpu_access, device_access gpu_access) noexcept
+		resource(object_type type, string&& name, size_t size, device_access cpu_access, device_access gpu_access, bool alloc_mem = true) noexcept
 			: object(type, std::move(name))
 			, size_(size)
-			, data_(size, 0)
+			, data_()
 			, cpu_access_(cpu_access)
 			, gpu_access_(gpu_access)
 		{
+			if (alloc_mem)
+				data_.resize(size, 0);
 		}
 
 	public:

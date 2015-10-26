@@ -1,6 +1,6 @@
 #pragma once
 
-#include "buffer.hpp"
+#include "buffer\buffer.hpp"
 #include "buffer\vertex_buffer.hpp"
 #include "buffer\index_buffer.hpp"
 #include "buffer\constant_buffer.hpp"

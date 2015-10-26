@@ -76,9 +76,12 @@ void test_constant_buffer()
 
 	constant_buffer cbuffer{ L"my constant buffer", std::move(layout) };
 
-	cbuffer[0].interpret_as<float3>() = { 1.0f, 1.0f, 1.0f };
-	cbuffer[1].interpret_as<float2>() = { 2.0f, 2.0f };
-	cbuffer[2].interpret_as<float2>() = { 3.0f, 3.0f };
+	cbuffer[0].as<float3>() = { 1.0f, 1.0f, 1.0f };
+	cbuffer[1].as<float2>() = { 2.0f, 2.0f };
+	cbuffer[2].as<float2>() = { 3.0f, 3.0f };
+
+	auto n0_layout = cbuffer[0];
+	decltype(auto) n0_sub_layout = n0_layout[0];
 
 	auto ptr = cbuffer.ptr_as<cbuffer_device>();
 }

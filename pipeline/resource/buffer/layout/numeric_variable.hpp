@@ -49,12 +49,12 @@ namespace leaves { namespace pipeline
 			sub_variables_.emplace_back(format, count, size, offset);
 		}
 
-		decltype(auto) operator[] (size_t index)
+		variable_layout& operator[] (size_t index)
 		{
 			return sub_variables_[index];
 		}
 
-		decltype(auto) operator[] (size_t index) const
+		variable_layout const& operator[] (size_t index) const
 		{
 			return sub_variables_[index];
 		}
@@ -70,21 +70,28 @@ namespace leaves { namespace pipeline
 	struct numeric_variable
 	{
 	public:
-		numeric_variable(variable_layout const& layout, byte const* ptr) noexcept
+		numeric_variable(variable_layout const& layout, byte* ptr) noexcept
 			: layout_(layout)
 			, ptr_(ptr)
 		{
 		}
 
 		template <typename T>
-		decltype(auto) interpret_as()
+		numeric_variable& operator= (T const& t)
 		{
-			using type = std::add_rvalue_reference_t<T>;
-			return const_cast<type>(const_cast<numeric_variable const&>(*this).interpret_as<T>());
+			this->as<T>() = t;
+			return *this;
 		}
 
 		template <typename T>
-		decltype(auto) interpret_as() const
+		decltype(auto) as()
+		{
+			using type = std::add_rvalue_reference_t<T>;
+			return const_cast<type>(const_cast<numeric_variable const&>(*this).as<T>());
+		}
+
+		template <typename T>
+		decltype(auto) as() const
 		{
 			static_assert(!std::is_pointer<T>::value, "Can`t a be pointer type.");
 			static_assert(!std::is_reference<T>::value, "Can`t be a reference type.");
@@ -96,13 +103,13 @@ namespace leaves { namespace pipeline
 			return *reinterpret_cast<type>(ptr_ + layout_.offset());
 		}
 
-		numeric_variable operator[] (size_t index) const
+		numeric_variable operator[] (size_t index)
 		{
 			return{ layout_[index], ptr_ };
 		}
 
 	private:
 		variable_layout const&	layout_;
-		byte const*				ptr_;
+		byte*					ptr_;
 	};
 } }

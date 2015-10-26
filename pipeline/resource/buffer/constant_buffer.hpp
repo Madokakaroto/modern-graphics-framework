@@ -32,9 +32,9 @@ namespace leaves{ namespace pipeline
 			layout_ = std::move(layout);
 		}
 
-		auto operator[](size_t index) const
+		numeric_variable operator[](size_t index)
 		{
-			return numeric_variable(layout_[index], data());
+			return{ layout_[index], data() };
 		}
 
 	private:
