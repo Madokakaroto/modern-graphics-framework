@@ -141,6 +141,9 @@
     <ClInclude Include="..\..\pipeline\resource\buffer\layout\iterator.hpp">
       <Filter>pipeline\resource\buffer\layout</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\pipeline\large_class.hpp">
+      <Filter>pipeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pipeline\main.cpp" />

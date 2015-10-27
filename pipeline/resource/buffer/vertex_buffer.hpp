@@ -29,6 +29,7 @@ namespace leaves { namespace pipeline
 			: base_type(std::move(name), layout.size(), count, device_access::none, device_access::read)
 			, layout_(std::move(layout))
 		{
+			allocate();
 		}
 
 		// attribute access

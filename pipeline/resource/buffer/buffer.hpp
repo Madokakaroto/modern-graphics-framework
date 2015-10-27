@@ -5,7 +5,7 @@
 namespace leaves { namespace pipeline 
 {
 	template <typename Impl>
-	class buffer : public resource<buffer<Impl>>
+	class buffer : public resource<Impl>
 	{
 		using base_type = resource<buffer<Impl>>;
 		using traits_type = buffer_traits<Impl>;
@@ -17,7 +17,7 @@ namespace leaves { namespace pipeline
 			size_t elem_count,			// element count
 			device_access cpu_access,	// host access
 			device_access gpu_access	// device access
-			)
+			) noexcept
 			: base_type(traits_type::type(), std::move(name), elem_size * elem_count, cpu_access, gpu_access)
 			, element_size_(elem_size)
 			, element_count_(elem_count)
@@ -37,7 +37,6 @@ namespace leaves { namespace pipeline
 		}
 
 	public:
-
 		size_t elem_size() const
 		{
 			return element_size_;

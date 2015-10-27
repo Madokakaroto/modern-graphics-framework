@@ -10,25 +10,25 @@ namespace leaves { namespace pipeline
 	class resource : public object
 	{
 	protected:
-		resource(object_type type, string&& name, size_t size, device_access cpu_access, device_access gpu_access, bool alloc_mem = true) noexcept
+		resource(object_type type, string&& name, size_t size, 
+			device_access cpu_access, device_access gpu_access) noexcept
 			: object(type, std::move(name))
 			, size_(size)
-			, data_()
 			, cpu_access_(cpu_access)
 			, gpu_access_(gpu_access)
 		{
-			if (alloc_mem)
-				data_.resize(size, 0);
 		}
 
 	public:
 		byte const* data() const noexcept
 		{
+			assert(allocated());
 			return data_.data();
 		}
 
 		byte* data() noexcept
 		{
+			assert(allocated());
 			return data_.data();
 		}
 
@@ -57,11 +57,26 @@ namespace leaves { namespace pipeline
 			return gpu_access_;
 		}
 
-	protected:
+		void allocate()
+		{
+			data_.resize(size_, 0);
+		}
 
+		void deallocate() noexcept
+		{
+			data_.clear();
+		}
+
+		bool allocated() const noexcept
+		{
+			return !data_.empty();
+		}
+
+	protected:
 		void resize(size_t size)
 		{
-			data_.resize(size);
+			if (allocated())
+				data_.resize(size, 0);
 			size_ = size;
 		}
 
@@ -71,7 +86,7 @@ namespace leaves { namespace pipeline
 			size_ = data_.size();
 		}
 
-	protected:
+	private:
 		size_t						size_;				// 32bit integral for x86 & 64bit integral for x64
 		std::vector<byte>			data_;				
 		device_access				cpu_access_;

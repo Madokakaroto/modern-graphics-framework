@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\pipeline\effect\effect.hpp" />
     <ClInclude Include="..\..\pipeline\forward.hpp" />
+    <ClInclude Include="..\..\pipeline\large_class.hpp" />
     <ClInclude Include="..\..\pipeline\math.hpp" />
     <ClInclude Include="..\..\pipeline\mpl.hpp" />
     <ClInclude Include="..\..\pipeline\object.hpp" />

@@ -18,16 +18,24 @@ namespace leaves { namespace pipeline
 	{
 		using base_type = buffer<structured_buffer>;
 	public:
-		structured_buffer(string&& name, structured_layout&& layout, uint16_t count,
-			device_access cpu_access = device_access::none, device_access gpu_access = device_access::read_write)
-			: base_type(std::move(name), 0, count, cpu_access, gpu_access)
+		structured_buffer(
+			string&& name,
+			structured_layout&& layout, 
+			uint16_t count
+			) noexcept
+			: base_type(std::move(name), 0, count, device_access::none, device_access::read_write)
 			, layout_(std::move(layout))
 		{
-			if (device_access::none != cpu_access)
-			{
-				resize(layout_.size(), count);
-			}
 		}
+
+		void resize(structured_layout&& layout, uint16_t count)
+		{
+			auto elem_size = layout.size();
+			base_type::resize(elem_size, count);
+			layout_ = std::move(layout);
+		}
+
+
 
 	private:
 		structured_layout layout_;

@@ -44,6 +44,11 @@ namespace leaves { namespace pipeline
 
 	class object;
 
+	// layout
+	class input_layout;
+	class variable_layout;
+	class numeric_variable;
+
 	// resource
 	template <typename>
 	class resource;

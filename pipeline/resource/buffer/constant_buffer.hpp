@@ -22,7 +22,7 @@ namespace leaves{ namespace pipeline
 			: base_type(std::move(name), layout.size(), 1, device_access::write, device_access::read)
 			, layout_(std::move(layout))
 		{
-
+			allocate();
 		}
 
 		void resize(structured_layout&& layout)

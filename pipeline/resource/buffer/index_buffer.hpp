@@ -33,6 +33,7 @@ namespace leaves { namespace pipeline
 			, primitive_count_(primitive_count)
 		{
 			throw_if_invalid_format(format);
+			allocate();
 		}
 
 		// attribute access

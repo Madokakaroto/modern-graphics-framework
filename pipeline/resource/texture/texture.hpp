@@ -54,7 +54,7 @@ namespace leaves { namespace pipeline
 	};
 
 	template <typename Impl>
-	class texture : public resource<texture<Impl>>
+	class texture : public resource<Impl>
 	{
 	public:
 		using base_type = resource;
