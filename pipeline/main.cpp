@@ -1,7 +1,5 @@
 #include <iostream>
-#include <pipeline\resource\buffer.hpp>
-
-#include <fstream>
+#include <pipeline\resource\texture.hpp>
 
 using float4 = leaves::float4;
 using float3 = leaves::float3;
@@ -9,88 +7,148 @@ using float2 = leaves::float2;
 using float4x4 = leaves::float4x4;
 using uint32_t = leaves::uint32_t;
 
-struct begin_with
+void test_texture_1d()
 {
-	float3 position;
-	float3 normal;
-	float2 tex_coord;
-	float4 color;
-};
+	using leaves::pipeline::pixel_format;
+	using leaves::pipeline::texture_1d;
+	using meta_type = texture_1d::meta;
 
-struct cbuffer_host
-{
-	using tuple_type = std::tuple<float3, float2, float2>;
-
-	float3 dir;
-	float2 coord1;
-	float2 coord2;
-};
-
-struct cbuffer_device
-{
-	float4 dir;
-	float2 coord1;
-	float2 coord2;
-};
-
-void test_vertex_buffer()
-{
-	using vertex_buffer = leaves::pipeline::vertex_buffer;
-	using input_layout = leaves::pipeline::input_layout;
-	using data_format = leaves::pipeline::data_format;
-	using data_semantic = leaves::pipeline::data_semantic;
-
-	input_layout layout;
-	layout.add(data_format::float3, data_semantic::position);
-	layout.add(data_format::float3, data_semantic::normal);
-	layout.add(data_format::float2, data_semantic::texcoord0);
-	layout.add(data_format::float4, data_semantic::color0);
-
-	vertex_buffer vb{ L"my vertex buffer", std::move(layout), 4 };
-
-	auto ptr = vb.ptr_as<begin_with>();
-	auto begin = vb.begin<float4>(data_semantic::color0);
-	auto end = vb.end<float4>(data_semantic::color0);
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.has_mipmap = true;
+	meta_data.width = 256;
+	texture_1d texture{ "texture 1d", meta_data };
 }
 
-void test_index_buffer()
+void test_texture_2d()
 {
-	using index_buffer = leaves::pipeline::index_buffer;
-	using data_format = leaves::pipeline::data_format;
-	using primitive_type = leaves::pipeline::primitive_type;
+	using leaves::pipeline::pixel_format;
+	using leaves::pipeline::texture_2d;
+	using meta_type = texture_2d::meta;
 
-	index_buffer ib{ L"my index buffer", primitive_type::triangle_list_adj, data_format::uint, 16 };
-
-	auto ptr = ib.ptr_as<uint32_t>();
-	auto begin = ib.begin<uint16_t>();
-	auto end = ib.end<uint16_t>();
+	// create a texture
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.has_mipmap = true;
+	meta_data.height = 128;
+	meta_data.width = 128;
+	texture_2d texture{ "texture 2d", meta_data };
 }
 
-void test_constant_buffer()
+void test_texture_3d()
 {
-	using constant_buffer = leaves::pipeline::constant_buffer;
-	using structured_layout = leaves::pipeline::structured_layout;
-	using leaves::pipeline::wrap_large_class;
+	using leaves::pipeline::pixel_format;
+	using leaves::pipeline::texture_3d;
+	using meta_type = texture_3d::meta;
 
-	structured_layout layout = wrap_large_class<cbuffer_host>();
+	// create a texture
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.has_mipmap = true;
+	meta_data.height = 128;
+	meta_data.width = 128;
+	meta_data.depth = 128;
+	texture_3d texture{ "texture 3d", meta_data };
+}
 
-	constant_buffer cbuffer{ L"my constant buffer", std::move(layout) };
+void test_texture_1d_array()
+{
+	using leaves::pipeline::pixel_format;
+	using leaves::pipeline::texture_1d_array;
+	using meta_type = texture_1d_array::meta;
 
-	cbuffer[0].as<float3>() = { 1.0f, 1.0f, 1.0f };
-	cbuffer[1].as<float2>() = { 2.0f, 2.0f };
-	cbuffer[2].as<float2>() = { 3.0f, 3.0f };
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.array_size = 4;
+	meta_data.width = 128;
+	meta_data.has_mipmap = true;
+	texture_1d_array texture_array{ "texture array 1d",  meta_data };
+}
 
-	auto n0_layout = cbuffer[0];
-	decltype(auto) n0_sub_layout = n0_layout[0];
+void test_texture_2d_array()
+{
+	using leaves::pipeline::texture_2d_array;
+	using leaves::pipeline::pixel_format;
+	using meta_type = texture_2d_array::meta;
 
-	auto ptr = cbuffer.ptr_as<cbuffer_device>();
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.width = 128;
+	meta_data.height = 128;
+	meta_data.array_size = 4;
+	meta_data.has_mipmap = true;
+	texture_2d_array texture_array{ "texture array 2d", meta_data };
+}
+
+void test_texture_cube()
+{
+	using leaves::pipeline::texture_cube;
+	using leaves::pipeline::pixel_format;
+	using meta_type = texture_cube::meta;
+	
+	meta_type meta_data;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.has_mipmap = true;
+	meta_data.height = 128;
+	meta_data.width = 128;
+	texture_cube cube_texture{ "texture cube", meta_data };
+}
+
+void test_texture_cube_array()
+{
+	using leaves::pipeline::texture_cube_array;
+	using leaves::pipeline::pixel_format;
+	using meta_type = texture_cube_array::meta;
+	
+	meta_type meta_data;
+	meta_data.width = 128;
+	meta_data.height = 128;
+	meta_data.array_size = 6;
+	meta_data.format = pixel_format::rgba_32;
+	meta_data.has_mipmap = true;
+	texture_cube_array cube_array{ "texture cube array", meta_data };
+	
+	cube_array.deallocate();
+}
+
+void test_texture_ds()
+{
+	using leaves::pipeline::texture_ds;
+	using leaves::pipeline::pixel_format;
+	using meta_type = texture_ds::meta;
+
+	meta_type meta_data;
+	meta_data.width = 128;
+	meta_data.height = 128;
+	meta_data.format = pixel_format::rgba_32;
+	texture_ds texture{ "texture depth stencil",  meta_data };
+}
+
+void test_texture_rt()
+{
+	using leaves::pipeline::texture_rt;
+	using leaves::pipeline::pixel_format;
+	using meta_type = texture_rt::meta;
+
+	meta_type meta_data;
+	meta_data.width = 128;
+	meta_data.height = 128;
+	meta_data.format = pixel_format::rgba_32;
+	texture_rt texture{ "texture render target",  meta_data };
 }
 
 int main(void)
 {
-	test_vertex_buffer();
-	test_index_buffer();
-	test_constant_buffer();
+	// test texture
+	test_texture_1d();
+	test_texture_2d();
+	test_texture_3d();
+	test_texture_1d_array();
+	test_texture_2d_array();
+	test_texture_cube();
+	test_texture_cube_array();
+	test_texture_ds();
+	test_texture_rt();
 
 	return 0;
 }

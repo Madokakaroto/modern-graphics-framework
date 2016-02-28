@@ -144,6 +144,9 @@
     <ClInclude Include="..\..\pipeline\large_class.hpp">
       <Filter>pipeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\texture\detail\calc_row_pitch_size.hpp">
+      <Filter>pipeline\resource\texture\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\pipeline\main.cpp" />

@@ -13,7 +13,7 @@ namespace leaves { namespace pipeline
 	{
 		friend class deleter;
 		using object_container = std::map<string, object*>;
-		using function_type = std::function<object*(string const& name)>;
+		using function_type = std::function<object*(string&& name)>;
 		using function_container = std::map<object_type, function_type>;
 	public:
 		struct deleter
@@ -31,7 +31,7 @@ namespace leaves { namespace pipeline
 			return factor;
 		}
 
-		auto get_object(string const& name, object_type type) -> std::shared_ptr<object>
+		auto get_object(string&& name, object_type type) -> std::shared_ptr<object>
 		{
 			auto itr = objects_.find(name);
 			object* created_object = nullptr;
@@ -43,7 +43,7 @@ namespace leaves { namespace pipeline
 				if (functinos_.end() == func_itr)
 					throw std::exception{};
 
-				created_object = func_itr->second(name);
+				created_object = func_itr->second(std::move(name));
 				objects_[name] = created_object;
 
 				obj.reset(created_object, deleter{});

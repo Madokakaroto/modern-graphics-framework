@@ -11,7 +11,16 @@ namespace leaves { namespace pipeline
 
 		uint16_t size_of(pixel_format format) noexcept
 		{
-			return 0;
+			switch (format)
+			{
+			case pixel_format::bc1:
+				return 0;
+			case pixel_format::rgba_32:
+				return 4;
+			default:
+				assert(false);
+				return 0;
+			}
 		}
 
 		uint16_t size_of(data_format format) noexcept

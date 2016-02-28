@@ -6,14 +6,19 @@ namespace leaves { namespace pipeline
 	template <>
 	struct texture_traits<texture_ds> : texture_traits_base
 	{
-		static constexpr bool is_texture_2d()
+		static constexpr bool is_texture_2d() noexcept
 		{
 			return true;
 		}
 
-		static constexpr bool is_texture_ds()
+		static constexpr bool is_texture_ds() noexcept
 		{
 			return true;
+		}
+
+		static constexpr object_type type() noexcept
+		{
+			return object_type::texture_ds;
 		}
 
 		struct meta

@@ -27,11 +27,7 @@ namespace leaves
 	using size_t	= std::size_t;
 	using byte		= std::uint8_t;
 
-#ifdef UNICODE 
-	using string = std::wstring;
-#else
 	using string = std::string;
-#endif
 
 	using char_t = string::value_type;
 }

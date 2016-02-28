@@ -37,7 +37,7 @@ namespace leaves { namespace pipeline
 
 			texture_meta to_tex_meta() const noexcept
 			{
-				return{ format, width, height, uint16_t{1}, uint16_t{6} * array_size, has_mipmap };
+				return{ format, width, height, uint16_t{1}, static_cast<uint16_t>(6 * array_size), has_mipmap };
 			}
 		};
 	};

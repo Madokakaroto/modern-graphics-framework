@@ -1,4 +1,5 @@
 #pragma once
+#include "calc_row_pitch_size.hpp"
 
 namespace leaves { namespace pipeline 
 {
@@ -22,14 +23,10 @@ namespace leaves { namespace pipeline
 	}
 
 	// this is a complex function
-	auto calculate_pitch_size(pixel_format format, uint16_t width, uint16_t height)
+	auto calculate_row_pitch_size(pixel_format format, uint16_t width, uint16_t height)
 		-> std::tuple<size_t, size_t>
 	{
-		size_t row = 0, slice = 0;
-		
-		// to be implemented
-
-		return std::tie(row, slice);
+		return detail::calculate_row_pitch_size(format, width, height);
 	}
 
 	// 与texture3D的不同
@@ -50,7 +47,7 @@ namespace leaves { namespace pipeline
 				throw std::exception();
 
 			// 不支持超过15层的mipmap，原始像素太大
-			auto mip_levels = mipmap ? uint16_t{ 0 } : calculate_mipmap_level(width, height, depth);
+			auto mip_levels = mipmap ? calculate_mipmap_level(width, height, depth) : uint16_t{ 0 };
 			if (mip_levels > 15)
 				throw std::exception();
 
@@ -70,7 +67,7 @@ namespace leaves { namespace pipeline
 					subres.height = std::max<uint16_t>(height >> mip_level, 1);
 					subres.depth  = std::max<uint16_t>(depth >> mip_level, 1);
 					std::tie(subres.row_pitch, subres.slice_pitch) =
-						calculate_pitch_size(format, subres.width, subres.height);
+						calculate_row_pitch_size(format, subres.width, subres.height);
 
 					texture_size += subres.slice_pitch * depth;
 				}

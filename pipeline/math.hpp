@@ -23,4 +23,13 @@ namespace leaves
 		log2 |= ((t & 0xCCCCCCCCu) != 0) << 1;
 		return log2;
 	}
+
+	template <typename T>
+	inline auto ceil_to_multiple_of_4(T t)
+		->std::enable_if_t<std::is_integral<T>::value, T>
+	{
+		auto temp = static_cast<T>(t + 0x11);
+		temp = (temp << 2) >> 2;
+		return temp;
+	}
 }
