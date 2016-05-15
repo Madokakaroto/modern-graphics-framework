@@ -1,8 +1,7 @@
 #pragma once
 
 #include "..\object.hpp"
-#include "infrastucture.hpp"
-#include "detail\numeric_size.hpp"
+#include "numeric.hpp"
 
 namespace leaves { namespace pipeline 
 {

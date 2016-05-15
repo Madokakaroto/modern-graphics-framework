@@ -1,6 +1,8 @@
 #include <iostream>
 #include <pipeline\resource\texture.hpp>
 
+#include <boost\fusion\adapted.hpp>
+
 using float4 = leaves::float4;
 using float3 = leaves::float3;
 using float2 = leaves::float2;
@@ -137,6 +139,26 @@ void test_texture_rt()
 	texture_rt texture{ "texture render target",  meta_data };
 }
 
+namespace leaves
+{
+	struct foo
+	{
+		int a;
+		bool b;
+	};
+
+	struct fee
+	{
+		int a;
+		bool b;
+	};
+}
+
+BOOST_FUSION_ADAPT_STRUCT(
+	leaves::foo,
+	(int , a)
+	(bool, b))
+
 int main(void)
 {
 	// test texture
@@ -149,6 +171,13 @@ int main(void)
 	test_texture_cube_array();
 	test_texture_ds();
 	test_texture_rt();
+
+	auto r = boost::fusion::traits::is_sequence<leaves::fee>::value;
+	r = boost::fusion::traits::is_sequence<leaves::foo>::value;
+
+	using type = std::array<leaves::float2x4, 4>;
+
+	auto result = leaves::pipeline::numeric_traits<type>::size();
 
 	return 0;
 }

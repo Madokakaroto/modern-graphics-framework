@@ -8,7 +8,13 @@ namespace leaves
 	using float3 = cml::vector<float, cml::fixed<3>>;
 	using float4 = cml::vector<float, cml::fixed<4>>;
 
+	using float2x2 = cml::matrix<float, cml::fixed<2, 2>, cml::row_basis, cml::col_major>;
+	using float2x3 = cml::matrix<float, cml::fixed<2, 3>, cml::row_basis, cml::col_major>;
+	using float2x4 = cml::matrix<float, cml::fixed<2, 4>, cml::row_basis, cml::col_major>;
+	using float3x2 = cml::matrix<float, cml::fixed<3, 2>, cml::row_basis, cml::col_major>;
 	using float3x3 = cml::matrix<float, cml::fixed<3, 3>, cml::row_basis, cml::col_major>;
+	using float3x4 = cml::matrix<float, cml::fixed<3, 4>, cml::row_basis, cml::col_major>;
+	using float4x2 = cml::matrix<float, cml::fixed<4, 2>, cml::row_basis, cml::col_major>;
 	using float4x3 = cml::matrix<float, cml::fixed<4, 3>, cml::row_basis, cml::col_major>;
 	using float4x4 = cml::matrix<float, cml::fixed<4, 4>, cml::row_basis, cml::col_major>;
 
