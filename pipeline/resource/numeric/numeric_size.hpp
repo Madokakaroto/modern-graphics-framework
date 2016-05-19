@@ -170,6 +170,8 @@ namespace leaves { namespace pipeline
 		template <typename T, size_t N>
 		struct traits<T[N]>
 		{
+			static_assert(N > 1, "N must be bigger than 1!");
+
 			using type = T;
 			static constexpr size_t count = N;
 		};
@@ -177,6 +179,8 @@ namespace leaves { namespace pipeline
 		template <typename T, size_t N>
 		struct traits<std::array<T, N>>
 		{
+			static_assert(N > 1, "N must be bigger than 1!");
+
 			using type = T;
 			static constexpr size_t count = N;
 		};
@@ -184,34 +188,10 @@ namespace leaves { namespace pipeline
 		template <typename Helper, typename ... Args>
 		struct structure_size_impl_expand_impl;
 
-		template <typename Helper, typename First, typename ... Rests>
-		struct structure_size_impl_expand_impl<Helper, First, Rests...>
+		template <typename Helper, typename T>
+		struct export_calculate_result
 		{
-			using traits_t = traits<First>;
-			using type = typename traits_t::type;
-			using helper_t = Helper;
-			static constexpr size_t count = traits_t::count;
-
-			using numeric_traits_t = numeric_traits<type>;
-			static constexpr size_t numeric_size = numeric_traits_t::size();
-			static constexpr size_t numeric_reg = numeric_traits_t::reg();
-
-			static constexpr bool new_four_component =
-				(count > 1) || (helper_t::reg + numeric_reg > 4);
-
-			static constexpr size_t new_reg = new_four_component ? 
-				0 : (helper_t::reg + numeric_reg) % 4;
-			static constexpr size_t new_size = new_four_component ?
-				align_to_multiple_of_16(helper_t::offset) + numeric_size : helper_t::offset + numeric_size;
-
-			static constexpr size_t value = new_size + structure_size_impl_expand_impl<
-				helper<new_reg, new_size>, Rests...>::value;
-		};
-
-		template <typename Helper, typename Last>
-		struct structure_size_impl_expand_impl<Helper, Last>
-		{
-			using traits_t = traits<Last>;
+			using traits_t = traits<T>;
 			using type = typename traits_t::type;
 			using helper_t = Helper;
 			static constexpr size_t count = traits_t::count;
@@ -227,7 +207,19 @@ namespace leaves { namespace pipeline
 				0 : (helper_t::reg + numeric_reg) % 4;
 			static constexpr size_t new_size = new_four_component ?
 				align_to_multiple_of_16(helper_t::offset) + numeric_size : helper_t::offset + numeric_size;
+		};
 
+		template <typename Helper, typename First, typename ... Rests>
+		struct structure_size_impl_expand_impl<Helper, First, Rests...> : export_calculate_result<Helper, First>
+		{
+			using next_type = structure_size_impl_expand_impl<helper<new_reg, new_size>, Rests...>;
+			static constexpr size_t value = next_type::value;
+		};
+
+		template <typename Helper, typename Last>
+		struct structure_size_impl_expand_impl<Helper, Last>
+			: export_calculate_result<Helper, Last>
+		{
 			static constexpr size_t value = new_size;
 		};
 

@@ -4,10 +4,10 @@
 
 namespace leaves { namespace pipeline
 {
+	class numeric_layout;
+
 	namespace detail
 	{
-
-
 		struct offset_register
 		{
 			uint16_t offset;
@@ -15,10 +15,13 @@ namespace leaves { namespace pipeline
 		};
 
 		template <typename T>
-		void bind_numeric(variable_layout& layout, offset_register& helper)
+		void bind_numeric(numeric_layout& layout, offset_register& helper)
 		{
-			using traits_type = numeric_traits<T>;
-			uint16_t reg = detail::reg_size(traits_type::format(), traits_type::count());
+			using traits_t = detail::traits<T>;
+			using type = typename traits_t::type;
+			using traits_type = numeric_traits<type>;
+
+			uint16_t reg = detail::reg_size(traits_type::format(), traits_t::count);
 	
 			// if the rest register count in the four component vector is not enough
 			if (reg + helper.reg > 4 && 0 != helper.reg)
@@ -29,10 +32,10 @@ namespace leaves { namespace pipeline
 			}
 	
 			// calculate size
-			auto size = detail::size_of(traits_type::format(), traits_type::count());
+			auto size = detail::size_of(traits_type::format(), traits_t::count);
 	
 			// add to container
-			layout.add_sub(traits_type::format(), traits_type::count(), size, helper.offset);
+			layout.add_sub(traits_type::format(), traits_t::count, size, helper.offset);
 	
 			// update intermediate variables
 			helper.offset += size;
@@ -40,18 +43,18 @@ namespace leaves { namespace pipeline
 		}
 	
 		template <typename T, size_t ... Is>
-		void init_variable_layout_from_tuple(variable_layout& layout, large_class_wrapper<T> tuple, std::index_sequence<Is...> seq)
+		void init_variable_layout_from_tuple(numeric_layout& layout, large_class_wrapper<T> tuple, std::index_sequence<Is...> seq)
 		{
 			offset_register helper = { 0, 0 };
 			using swallow_t = bool[];
 	
-			swallow_t s = { (bind_numeric<std::tuple_element_t<Is, T>>(layout, helper), true)... };
+			swallow_t s = { (bind_numeric<type_at<T, Is>>(layout, helper), true)... };
 		}
 	
 		template <typename T>
-		void init_variable_layout_from_tuple(variable_layout& layout, large_class_wrapper<T> tuple)
+		void init_variable_layout_from_tuple(numeric_layout& layout, large_class_wrapper<T> tuple)
 		{
-			init_variable_layout_from_tuple(layout, tuple, std::make_index_sequence<std::tuple_size<T>::value>{});
+			init_variable_layout_from_tuple(layout, tuple, std::make_index_sequence<sequence_size<T>::value>{});
 		}
 	}
 
@@ -76,7 +79,9 @@ namespace leaves { namespace pipeline
 
 		template <typename T>
 		numeric_layout(large_class_wrapper<T> t)
-			: numeric_layout(data_format::structured, 1, 0, 0)
+			: numeric_layout(
+				data_format::structured, 1, 
+				structure_size<T>::value, 0)
 		{
 			detail::init_variable_layout_from_tuple(*this, t);
 		}

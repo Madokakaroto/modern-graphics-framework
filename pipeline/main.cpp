@@ -143,21 +143,17 @@ namespace leaves
 {
 	struct foo
 	{
-		float a;
-		float b;
-	};
-
-	struct fee
-	{
-		int a;
-		bool b;
+		float		a;
+		float2		b;
+		float4x4	c;
 	};
 }
 
 BOOST_FUSION_ADAPT_STRUCT(
 	leaves::foo,
 	(float, a)
-	(float, b))
+	(float2, b)
+	(float4x4, c))
 
 int main(void)
 {
@@ -172,12 +168,10 @@ int main(void)
 	test_texture_ds();
 	test_texture_rt();
 
-	auto r = boost::fusion::traits::is_sequence<leaves::fee>::value;
-	r = boost::fusion::traits::is_sequence<leaves::foo>::value;
+	auto result = leaves::pipeline::sequence_size<leaves::foo>::value;
 
-	using type = std::array<leaves::float2x4, 4>;
-
-	constexpr auto result = leaves::pipeline::detail::align_to_multiple_of_16(65);
+	leaves::pipeline::numeric_layout layout =
+		leaves::wrap_large_class<leaves::foo>();
 
 	return 0;
 }
