@@ -2,13 +2,10 @@
 
 namespace leaves
 {
-	namespace detail
+	template <typename T>
+	struct large_class_wrapper
 	{
-		template <typename T>
-		struct large_class_wrapper
-		{
-		};
-	}
+	};
 
 	template <typename T>
 	auto wrap_large_class()

@@ -143,8 +143,8 @@ namespace leaves
 {
 	struct foo
 	{
-		int a;
-		bool b;
+		float a;
+		float b;
 	};
 
 	struct fee
@@ -156,8 +156,8 @@ namespace leaves
 
 BOOST_FUSION_ADAPT_STRUCT(
 	leaves::foo,
-	(int , a)
-	(bool, b))
+	(float, a)
+	(float, b))
 
 int main(void)
 {
@@ -177,7 +177,7 @@ int main(void)
 
 	using type = std::array<leaves::float2x4, 4>;
 
-	auto result = leaves::pipeline::numeric_traits<type>::size();
+	constexpr auto result = leaves::pipeline::detail::align_to_multiple_of_16(65);
 
 	return 0;
 }

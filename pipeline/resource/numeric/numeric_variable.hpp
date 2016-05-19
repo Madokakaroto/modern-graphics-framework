@@ -4,60 +4,60 @@
 
 namespace leaves { namespace pipeline
 {
-		//namespace detail
-		//{
-		//	struct offset_register
-		//	{
-		//		uint16_t offset;
-		//		uint16_t reg;
-		//	};
-		//
-		//	template <typename T>
-		//	void bind_numeric(variable_layout& layout, offset_register& helper)
-		//	{
-		//		using traits_type = numeric_traits<T>;
-		//		uint16_t reg = detail::reg_size(traits_type::format(), traits_type::count());
-		//
-		//		// if the rest register count in the four component vector is not enough
-		//		if (reg + helper.reg > 4 && 0 != helper.reg)
-		//		{
-		//			// begin with a new four component vector
-		//			helper.offset = detail::align(helper.offset);
-		//			helper.reg = 0;
-		//		}
-		//
-		//		// calculate size
-		//		auto size = detail::size_of(traits_type::format(), traits_type::count());
-		//
-		//		// add to container
-		//		layout.add_sub(traits_type::format(), traits_type::count(), size, helper.offset);
-		//
-		//		// update intermediate variables
-		//		helper.offset += size;
-		//		helper.reg += reg & 0x03;
-		//	}
-		//
-		//	template <typename T, size_t ... Is>
-		//	void init_variable_layout_from_tuple(variable_layout& layout, detail::large_class_wrapper<T> tuple, std::index_sequence<Is...> seq)
-		//	{
-		//		offset_register helper = { 0, 0 };
-		//		using swallow_t = bool[];
-		//
-		//		swallow_t s = { (bind_numeric<std::tuple_element_t<Is, T>>(layout, helper), true)... };
-		//	}
-		//
-		//	template <typename T>
-		//	void init_variable_layout_from_tuple(variable_layout& layout, detail::large_class_wrapper<T> tuple)
-		//	{
-		//		init_variable_layout_from_tuple(layout, tuple, std::make_index_sequence<std::tuple_size<T>::value>{});
-		//	}
-		//}
+	namespace detail
+	{
+
+
+		struct offset_register
+		{
+			uint16_t offset;
+			uint16_t reg;
+		};
+
+		template <typename T>
+		void bind_numeric(variable_layout& layout, offset_register& helper)
+		{
+			using traits_type = numeric_traits<T>;
+			uint16_t reg = detail::reg_size(traits_type::format(), traits_type::count());
+	
+			// if the rest register count in the four component vector is not enough
+			if (reg + helper.reg > 4 && 0 != helper.reg)
+			{
+				// begin with a new four component vector
+				helper.offset = detail::align(helper.offset);
+				helper.reg = 0;
+			}
+	
+			// calculate size
+			auto size = detail::size_of(traits_type::format(), traits_type::count());
+	
+			// add to container
+			layout.add_sub(traits_type::format(), traits_type::count(), size, helper.offset);
+	
+			// update intermediate variables
+			helper.offset += size;
+			helper.reg += reg & 0x03;
+		}
+	
+		template <typename T, size_t ... Is>
+		void init_variable_layout_from_tuple(variable_layout& layout, large_class_wrapper<T> tuple, std::index_sequence<Is...> seq)
+		{
+			offset_register helper = { 0, 0 };
+			using swallow_t = bool[];
+	
+			swallow_t s = { (bind_numeric<std::tuple_element_t<Is, T>>(layout, helper), true)... };
+		}
+	
+		template <typename T>
+		void init_variable_layout_from_tuple(variable_layout& layout, large_class_wrapper<T> tuple)
+		{
+			init_variable_layout_from_tuple(layout, tuple, std::make_index_sequence<std::tuple_size<T>::value>{});
+		}
+	}
 
 	// numeric layout
 	class numeric_layout
 	{
-		template <typename T>
-		using large_class_wrapper = leaves::detail::large_class_wrapper<T>;
 		using sub_var_container = std::vector<numeric_layout>;
 
 		static constexpr size_t sub_count = 8;
@@ -75,10 +75,10 @@ namespace leaves { namespace pipeline
 		}
 
 		template <typename T>
-		numeric_layout(large_class_wrapper<T>)
-			: numeric_layout(data_format::structured, )
+		numeric_layout(large_class_wrapper<T> t)
+			: numeric_layout(data_format::structured, 1, 0, 0)
 		{
-
+			detail::init_variable_layout_from_tuple(*this, t);
 		}
 
 		// attribute access
