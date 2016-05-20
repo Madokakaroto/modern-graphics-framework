@@ -146,6 +146,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\pipeline\main.cpp" />
+    <ClCompile Include="..\..\pipeline\dummy.cpp" />
   </ItemGroup>
 </Project>

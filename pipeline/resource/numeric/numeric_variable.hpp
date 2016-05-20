@@ -4,8 +4,6 @@
 
 namespace leaves { namespace pipeline
 {
-	class numeric_layout;
-
 	namespace detail
 	{
 		struct offset_register
@@ -61,11 +59,9 @@ namespace leaves { namespace pipeline
 	class numeric_layout
 	{
 		using sub_var_container = std::vector<numeric_layout>;
-
 		static constexpr size_t sub_count = 8;
 
 	public:
-
 		// construct
 		numeric_layout(data_format format, uint16_t count, uint16_t size, uint16_t offset)
 			: format_(format)

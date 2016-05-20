@@ -42,7 +42,7 @@ namespace leaves { namespace pipeline
 
 	// layout
 	class input_layout;
-	class variable_layout;
+	class numeric_layout;
 	class numeric_variable;
 
 	// resource

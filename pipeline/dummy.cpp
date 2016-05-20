@@ -154,24 +154,3 @@ BOOST_FUSION_ADAPT_STRUCT(
 	(float, a)
 	(float2, b)
 	(float4x4, c))
-
-int main(void)
-{
-	// test texture
-	test_texture_1d();
-	test_texture_2d();
-	test_texture_3d();
-	test_texture_1d_array();
-	test_texture_2d_array();
-	test_texture_cube();
-	test_texture_cube_array();
-	test_texture_ds();
-	test_texture_rt();
-
-	auto result = leaves::pipeline::sequence_size<leaves::foo>::value;
-
-	leaves::pipeline::numeric_layout layout =
-		leaves::wrap_large_class<leaves::foo>();
-
-	return 0;
-}
