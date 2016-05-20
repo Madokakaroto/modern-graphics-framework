@@ -1,8 +1,7 @@
 #pragma once
 
 #include "buffer.hpp"
-#include "layout\input_layout.hpp"
-#include "layout\iterator.hpp"
+#include "iterator.hpp"
 
 namespace leaves { namespace pipeline
 {

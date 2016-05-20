@@ -25,9 +25,6 @@
     <Filter Include="pipeline\resource\texture\detail">
       <UniqueIdentifier>{f390029e-a4c8-4b24-92c4-f626f8ed3d73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="pipeline\resource\buffer\layout">
-      <UniqueIdentifier>{1d2d4096-8bf7-4e81-8411-7b36e1678c0f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="pipeline\resource\nuermic">
       <UniqueIdentifier>{416d4073-1d77-4d6c-ae86-d1bada39b45d}</UniqueIdentifier>
     </Filter>
@@ -123,12 +120,6 @@
     <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp">
       <Filter>pipeline\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\pipeline\resource\buffer\layout\input_layout.hpp">
-      <Filter>pipeline\resource\buffer\layout</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\pipeline\resource\buffer\layout\iterator.hpp">
-      <Filter>pipeline\resource\buffer\layout</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\pipeline\large_class.hpp">
       <Filter>pipeline</Filter>
     </ClInclude>
@@ -145,6 +136,12 @@
       <Filter>pipeline\resource\nuermic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\pipeline\resource\numeric\numeric_traits.hpp">
+      <Filter>pipeline\resource\nuermic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\buffer\iterator.hpp">
+      <Filter>pipeline\resource\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\pipeline\resource\numeric\input_layout.hpp">
       <Filter>pipeline\resource\nuermic</Filter>
     </ClInclude>
   </ItemGroup>

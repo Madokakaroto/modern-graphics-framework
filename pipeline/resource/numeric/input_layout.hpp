@@ -13,7 +13,7 @@ namespace leaves { namespace pipeline
 			uint16_t		offset;
 		};
 
-		static constexpr size_t attribute_count = 16;
+		static constexpr size_t attribute_count = 8;
 		using attribute_container = std::vector<attribute>;
 
 	public:

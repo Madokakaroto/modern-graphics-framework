@@ -4,9 +4,11 @@ namespace leaves { namespace pipeline
 {
 	namespace detail
 	{
-		static uint16_t align(uint16_t size) noexcept
+		template <size_t N, typename T>
+		constexpr static T align(T input) noexcept
 		{
-			return (size & 0xFFF0) + (((size & 0x000F) != 0) << 4);
+			//return (size & 0xFFF0) + (((size & 0x000F) != 0) << 4);
+			return ((input + N - 1) / N) * N;
 		}
 
 		uint16_t size_of(pixel_format format) noexcept
@@ -92,7 +94,7 @@ namespace leaves { namespace pipeline
 				data_size = size;
 			
 			if (count > 1)
-				data_size = align(size) * count;
+				data_size = align<16>(size) * count;
 
 			return data_size;
 		}
@@ -136,53 +138,13 @@ namespace leaves { namespace pipeline
 		}
 	}
 
-	template <typename T, size_t N>
-	using type_at = std::remove_cv_t<std::remove_reference_t<
-		typename boost::fusion::result_of::at_c<T, N>::type>>;
-
-	template <typename T>
-	using is_sequence = boost::fusion::traits::is_sequence<T>;
-
-	template <typename T>
-	using sequence_size = boost::fusion::result_of::size<T>;
-
 	namespace detail
 	{
-		static constexpr size_t align_to_multiple_of_16(size_t input) noexcept
-		{
-			return ((input + 15) / 16) * 16;
-		}
-
 		template <size_t Reg, size_t Offset>
-		struct helper
+		struct structure_size_helper
 		{
 			static constexpr size_t reg = Reg;
 			static constexpr size_t offset = Offset;
-		};
-
-		template <typename T>
-		struct traits
-		{
-			using type = T;
-			static constexpr size_t count = 1;
-		};
-
-		template <typename T, size_t N>
-		struct traits<T[N]>
-		{
-			static_assert(N > 1, "N must be bigger than 1!");
-
-			using type = T;
-			static constexpr size_t count = N;
-		};
-
-		template <typename T, size_t N>
-		struct traits<std::array<T, N>>
-		{
-			static_assert(N > 1, "N must be bigger than 1!");
-
-			using type = T;
-			static constexpr size_t count = N;
 		};
 
 		template <typename Helper, typename ... Args>
@@ -191,12 +153,11 @@ namespace leaves { namespace pipeline
 		template <typename Helper, typename T>
 		struct export_calculate_result
 		{
-			using traits_t = traits<T>;
-			using type = typename traits_t::type;
+			using traits_t = array_traits<T>;
+			using numeric_traits_t = typename traits_t::numeric_traits_t;
 			using helper_t = Helper;
-			static constexpr size_t count = traits_t::count;
 
-			using numeric_traits_t = numeric_traits<type>;
+			static constexpr size_t count = traits_t::count;
 			static constexpr size_t numeric_size = numeric_traits_t::size();
 			static constexpr size_t numeric_reg = numeric_traits_t::reg();
 
@@ -206,13 +167,13 @@ namespace leaves { namespace pipeline
 			static constexpr size_t new_reg = new_four_component ?
 				0 : (helper_t::reg + numeric_reg) % 4;
 			static constexpr size_t new_size = new_four_component ?
-				align_to_multiple_of_16(helper_t::offset) + numeric_size : helper_t::offset + numeric_size;
+				align<16>(helper_t::offset) + numeric_size : helper_t::offset + numeric_size;
 		};
 
 		template <typename Helper, typename First, typename ... Rests>
 		struct structure_size_impl_expand_impl<Helper, First, Rests...> : export_calculate_result<Helper, First>
 		{
-			using next_type = structure_size_impl_expand_impl<helper<new_reg, new_size>, Rests...>;
+			using next_type = structure_size_impl_expand_impl<structure_size_helper<new_reg, new_size>, Rests...>;
 			static constexpr size_t value = next_type::value;
 		};
 
@@ -230,7 +191,7 @@ namespace leaves { namespace pipeline
 		struct structure_size_impl_expand
 		{
 			static constexpr size_t value = structure_size_impl_expand_impl
-				<helper<0,0>, Args...>::value;
+				<structure_size_helper<0,0>, Args...>::value;
 		};
 
 		template <typename T, size_t ... Is>

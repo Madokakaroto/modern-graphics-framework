@@ -17,9 +17,8 @@ namespace leaves { namespace pipeline
 		template <typename T>
 		void bind_numeric(numeric_layout& layout, offset_register& helper)
 		{
-			using traits_t = detail::traits<T>;
-			using type = typename traits_t::type;
-			using traits_type = numeric_traits<type>;
+			using traits_t = array_traits<T>;
+			using traits_type = typename traits_t::numeric_traits_t;
 
 			uint16_t reg = detail::reg_size(traits_type::format(), traits_t::count);
 	
@@ -27,7 +26,7 @@ namespace leaves { namespace pipeline
 			if (reg + helper.reg > 4 && 0 != helper.reg)
 			{
 				// begin with a new four component vector
-				helper.offset = detail::align(helper.offset);
+				helper.offset = detail::align<16>(helper.offset);
 				helper.reg = 0;
 			}
 	

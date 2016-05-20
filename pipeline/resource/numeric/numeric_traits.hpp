@@ -2,6 +2,7 @@
 
 namespace leaves { namespace pipeline
 {
+	// traits for numeric types
 	template <typename T>
 	struct numeric_traits;
 
@@ -251,4 +252,43 @@ namespace leaves { namespace pipeline
 			return 64;
 		}
 	};
+
+	template <typename T, size_t N>
+	using type_at = std::remove_cv_t<std::remove_reference_t<
+		typename boost::fusion::result_of::at_c<T, N>::type >> ;
+
+	template <typename T>
+	using is_sequence = boost::fusion::traits::is_sequence<T>;
+
+	template <typename T>
+	using sequence_size = boost::fusion::result_of::size<T>;
+
+	template <typename T>
+	struct array_traits
+	{
+		using type = T;
+		using numeric_traits_t = numeric_traits<type>;
+		static constexpr size_t count = 1;
+	};
+
+	template <typename T, size_t N>
+	struct array_traits<T[N]>
+	{
+		static_assert(N > 1, "N must be bigger than 1!");
+
+		using type = T;
+		using numeric_traits_t = numeric_traits<type>;
+		static constexpr size_t count = N;
+	};
+
+	template <typename T, size_t N>
+	struct array_traits<std::array<T, N>>
+	{
+		static_assert(N > 1, "N must be bigger than 1!");
+
+		using type = T;
+		using numeric_traits_t = numeric_traits<type>;
+		static constexpr size_t count = N;
+	};
+
 } }
