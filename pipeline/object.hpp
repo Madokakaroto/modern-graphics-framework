@@ -10,24 +10,35 @@ namespace leaves { namespace pipeline
 {
 	enum class object_type
 	{
-		texture_1d,
-		texture_2d,
-		texture_3d,
-		texture_cube,
-		texture_1d_array,
-		texture_2d_array,
-		texture_cube_array,
-		texture_rt,
-		texture_ds,
+		// resource objects
+			// texutres
+			texture_1d,
+			texture_2d,
+			texture_3d,
+			texture_cube,
+			texture_1d_array,
+			texture_2d_array,
+			texture_cube_array,
+			texture_rt,
+			texture_ds,
 
-		vertex_buffer,
-		index_buffer,
-		constant_buffer,
-		structured_buffer,
-		raw_buffer,
-		indirect_argument_buffer,
+			// buffers
+			vertex_buffer,
+			index_buffer,
+			constant_buffer,
+			structured_buffer,
+			raw_buffer,
+			indirect_argument_buffer,
 
+		// shader objects
 		vertex_shader,
+		geometry_shader,
+		hull_shader,
+		domain_shader,
+		fragment_shader,
+		compute_shader,
+
+		// state objects
 		sampler,
 	};
 

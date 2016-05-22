@@ -1,7 +1,6 @@
 #pragma once
 
 #include "buffer.hpp"
-#include "layout\structured_layout.hpp"
 
 namespace leaves { namespace pipeline 
 {

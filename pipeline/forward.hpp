@@ -18,18 +18,14 @@ namespace leaves
 	using int16_t	= std::int16_t;
 	using int32_t	= std::int32_t;
 	using int64_t	= std::int64_t;
-
 	using uint8_t	= std::uint8_t;
 	using uint16_t	= std::uint16_t;
 	using uint32_t	= std::uint32_t;
 	using uint64_t	= std::uint64_t;
-	
 	using size_t	= std::size_t;
 	using byte		= std::uint8_t;
-
-	using string = std::string;
-
-	using char_t = string::value_type;
+	using string	= std::string;
+	using char_t	= string::value_type;
 }
 
 namespace leaves { namespace pipeline
@@ -46,7 +42,6 @@ namespace leaves { namespace pipeline
 	class numeric_variable;
 
 	// resource
-	template <typename>
 	class resource;
 		
 		// textures

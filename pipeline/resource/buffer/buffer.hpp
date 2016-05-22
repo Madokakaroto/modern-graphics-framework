@@ -5,9 +5,8 @@
 namespace leaves { namespace pipeline 
 {
 	template <typename Impl>
-	class buffer : public resource<Impl>
+	class buffer : public resource
 	{
-		using base_type = resource<buffer<Impl>>;
 		using traits_type = buffer_traits<Impl>;
 
 	protected:
@@ -17,8 +16,8 @@ namespace leaves { namespace pipeline
 			size_t elem_count,			// element count
 			device_access cpu_access,	// host access
 			device_access gpu_access	// device access
-			) noexcept
-			: base_type(traits_type::type(), std::move(name), elem_size * elem_count, cpu_access, gpu_access)
+			)
+			: resource(traits_type::type(), std::move(name), elem_size * elem_count, cpu_access, gpu_access)
 			, element_size_(elem_size)
 			, element_count_(elem_count)
 		{
@@ -29,8 +28,8 @@ namespace leaves { namespace pipeline
 			if (elem_size == element_size_ && elem_count == element_count_)
 				return;
 
-			if(elem_size * elem_count != size())
-				base_type::resize(elem_size * elem_count);
+			if (elem_size * elem_count != size())
+				resource::resize(elem_size * elem_count);
 
 			element_size_ = elem_size;
 			element_count_ = elem_count;

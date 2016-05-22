@@ -30,6 +30,13 @@ namespace leaves { namespace pipeline
 		{
 			allocate();
 		}
+
+		vertex_buffer(string&& name, input_layout const& layout, size_t count)
+			: base_type(std::move(name), layout.size(), count, device_access::none, device_access::read)
+			, layout_(layout)
+		{
+			allocate();
+		}
 	
 		// attribute access
 		input_layout const& layout() const noexcept

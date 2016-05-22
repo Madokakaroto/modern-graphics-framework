@@ -54,10 +54,9 @@ namespace leaves { namespace pipeline
 	};
 
 	template <typename Impl>
-	class texture : public resource<Impl>
+	class texture : public resource
 	{
 	public:
-		using base_type = resource;
 		using traits_type = texture_traits<Impl>;
 		using subresource_container = std::vector<subresource>;
 		using meta_data = typename traits_type::meta;
@@ -72,7 +71,7 @@ namespace leaves { namespace pipeline
 			texture_meta const& meta_data,		// meta data
 			device_access cpu_access,			// host access
 			device_access gpu_access)			// device access
-			: base_type(traits_type::type(), std::move(name), 0, cpu_access, gpu_access)
+			: resource(traits_type::type(), std::move(name), 0, cpu_access, gpu_access)
 			, meta_data_(meta_data)
 			, subresources_()
 		{

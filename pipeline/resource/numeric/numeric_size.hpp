@@ -58,6 +58,7 @@ namespace leaves { namespace pipeline
 			case data_format::float4x4:
 				return 64;
 			default:
+				assert(false);
 				return 0;
 			}
 		}
@@ -66,6 +67,7 @@ namespace leaves { namespace pipeline
 		{
 			switch (primitive)
 			{
+			case primitive_type::point_list:
 			case primitive_type::line_strip:
 				return primitive_count;
 			case primitive_type::line_list:
@@ -81,8 +83,9 @@ namespace leaves { namespace pipeline
 				return primitive_count * 6;
 			case primitive_type::triangle_strip_adj:
 				return primitive_count * 2 + 4;
-			default: //primitive_type::point_list:
-				return primitive_count;
+			default: //control points n
+				assert(false);
+				return 0;
 			}
 		}
 
@@ -99,11 +102,8 @@ namespace leaves { namespace pipeline
 			return data_size;
 		}
 
-		static uint16_t reg_size(data_format format, uint16_t count) noexcept
+		static uint16_t reg_size(data_format format) noexcept
 		{
-			if (count > 1)
-				return 4;
-
 			switch (format)
 			{
 			case data_format::int_:
@@ -162,7 +162,7 @@ namespace leaves { namespace pipeline
 			static constexpr size_t numeric_reg = numeric_traits_t::reg();
 
 			static constexpr bool new_four_component =
-				(count > 1) || (helper_t::reg + numeric_reg > 4);
+				(count > 1) || (helper_t::reg + numeric_reg >= 4);
 
 			static constexpr size_t new_reg = new_four_component ?
 				0 : (helper_t::reg + numeric_reg) % 4;
@@ -173,7 +173,8 @@ namespace leaves { namespace pipeline
 		template <typename Helper, typename First, typename ... Rests>
 		struct structure_size_impl_expand_impl<Helper, First, Rests...> : export_calculate_result<Helper, First>
 		{
-			using next_type = structure_size_impl_expand_impl<structure_size_helper<new_reg, new_size>, Rests...>;
+			using next_helper = structure_size_helper<new_reg, new_size>;
+			using next_type = structure_size_impl_expand_impl<next_helper, Rests...>;
 			static constexpr size_t value = next_type::value;
 		};
 
@@ -181,7 +182,7 @@ namespace leaves { namespace pipeline
 		struct structure_size_impl_expand_impl<Helper, Last>
 			: export_calculate_result<Helper, Last>
 		{
-			static constexpr size_t value = new_size;
+			static constexpr size_t value = align<16>(new_size);
 		};
 
 		template <typename T, typename Indices>

@@ -18,25 +18,26 @@ namespace leaves { namespace pipeline
 			using traits_t = array_traits<T>;
 			using traits_type = typename traits_t::numeric_traits_t;
 
-			uint16_t reg = detail::reg_size(traits_type::format(), traits_t::count);
-	
-			// if the rest register count in the four component vector is not enough
-			if (reg + helper.reg > 4 && 0 != helper.reg)
+			// get the current register position
+			auto reg = detail::reg_size(traits_type::format());
+
+			// if we need to begin a new four component ? 
+			auto begin_new_four_component = traits_t::count > 1 || reg + helper.reg >= 4;
+			if (begin_new_four_component)
 			{
-				// begin with a new four component vector
-				helper.offset = detail::align<16>(helper.offset);
 				helper.reg = 0;
+				helper.offset = detail::align<16>(helper.offset);
 			}
-	
-			// calculate size
+
+			// calculate the size of current variable
 			auto size = detail::size_of(traits_type::format(), traits_t::count);
-	
-			// add to container
+
+			// add the container
 			layout.add_sub(traits_type::format(), traits_t::count, size, helper.offset);
-	
-			// update intermediate variables
+
+			// update helper object, which acts like a context of this calculation process
 			helper.offset += size;
-			helper.reg += reg & 0x03;
+			helper.reg += reg & 0x03;		// helper.reg = £¨helper.reg + reg£© % 4
 		}
 	
 		template <typename T, size_t ... Is>

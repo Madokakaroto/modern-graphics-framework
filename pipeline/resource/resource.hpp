@@ -5,7 +5,6 @@
 
 namespace leaves { namespace pipeline 
 {
-	template <typename Impl>
 	class resource : public object
 	{
 	protected:

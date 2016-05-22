@@ -57,24 +57,24 @@ namespace leaves { namespace pipeline
 			return tmp;
 		}
 
-		stream_buffer_iterator& operator += (int count)
+		stream_buffer_iterator& operator += (difference_type count)
 		{
 			data_ = throw_if_range_error(count * stride_);
 			return *this;
 		}
 
-		stream_buffer_iterator operator+(int count)
+		stream_buffer_iterator operator+(difference_type count)
 		{
-			iterator tmp = *this;
+			stream_buffer_iterator tmp = *this;
 			return tmp += count;
 		}
 
-		stream_buffer_iterator& operator -= (int count)
+		stream_buffer_iterator& operator -= (difference_type count)
 		{
 			return *this += (-count);
 		}
 
-		stream_buffer_iterator operator-(int count)
+		stream_buffer_iterator operator-(difference_type count)
 		{
 			iterator tmp = *this;
 			return tmp -= count;

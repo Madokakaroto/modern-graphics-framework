@@ -18,57 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\pipeline\effect\effect.hpp" />
-    <ClInclude Include="..\..\pipeline\forward.hpp" />
-    <ClInclude Include="..\..\pipeline\large_class.hpp" />
-    <ClInclude Include="..\..\pipeline\math.hpp" />
-    <ClInclude Include="..\..\pipeline\mpl.hpp" />
-    <ClInclude Include="..\..\pipeline\object.hpp" />
-    <ClInclude Include="..\..\pipeline\object_manager.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\constant_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\index_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\indirect_argument_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\iterator.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\raw_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\structured_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\buffer\vertex_buffer.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\infrastucture.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\numeric.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\numeric\input_layout.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\numeric\numeric_size.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\numeric\numeric_traits.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\numeric\numeric_variable.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\resource.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\detail\calc_row_pitch_size.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\detail\texture_subresource.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_1d.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_1d_array.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_2d.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_2d_array.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_3d.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_cube.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_cube_array.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_ds.hpp" />
-    <ClInclude Include="..\..\pipeline\resource\texture\texture_rt.hpp" />
-    <ClInclude Include="..\..\pipeline\shader\shader.hpp" />
-    <ClInclude Include="..\..\pipeline\state\sampler.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\pipeline\dummy.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B6995E93-E4D2-406B-9A05-56DDE9F265CC}</ProjectGuid>
-    <RootNamespace>pipeline</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{487CEA69-4F9D-489E-8156-E57458F9C58C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>test_buffers</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -78,10 +36,10 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -91,7 +49,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -100,74 +58,98 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\pipeline_win.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\pipeline_win.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\pipeline_win.props" />
+    <Import Project="..\..\..\pipeline_win.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\pipeline_win.props" />
+    <Import Project="..\..\..\pipeline_win.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\test\test_buffers.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
