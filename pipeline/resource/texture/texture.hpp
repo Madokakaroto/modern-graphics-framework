@@ -67,7 +67,7 @@ namespace leaves { namespace pipeline
 		 * constructor
 		 */
 		texture(
-			string&& name,						// resource name
+			string name,						// resource name
 			texture_meta const& meta_data,		// meta data
 			device_access cpu_access,			// host access
 			device_access gpu_access)			// device access

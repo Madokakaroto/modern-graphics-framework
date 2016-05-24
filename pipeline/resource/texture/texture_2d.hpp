@@ -38,7 +38,7 @@ namespace leaves { namespace pipeline
 		using base_type = texture<texture_2d>;
 		using meta = texture_traits<texture_2d>::meta;
 	public:
-		texture_2d(string&& name, meta const& meta_data_spec)
+		texture_2d(string name, meta const& meta_data_spec)
 			: base_type(std::move(name), meta_data_spec.to_tex_meta(), device_access::none, device_access::read)
 		{
 		}

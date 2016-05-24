@@ -45,7 +45,7 @@ namespace leaves { namespace pipeline
 		using meta = texture_traits<texture_1d_array>::meta;
 	public:
 		// constructor
-		texture_1d_array(string&& name, meta const& meta_data_spec)
+		texture_1d_array(string name, meta const& meta_data_spec)
 			: base_type(std::move(name), meta_data_spec.to_tex_meta(), device_access::none, device_access::read)
 		{
 		}

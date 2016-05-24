@@ -18,16 +18,9 @@ namespace leaves{ namespace pipeline
 		using base_type = buffer<constant_buffer>;
 	
 	public:
-		constant_buffer(string&& name, numeric_layout&& layout)
+		constant_buffer(string name, numeric_layout layout)
 			: base_type(std::move(name), layout.size(), 1, device_access::write, device_access::read)
 			, layout_(std::move(layout))
-		{
-			allocate();
-		}
-
-		constant_buffer(string&& name, numeric_layout const& layout)
-			: base_type(std::move(name), layout.size(), 1, device_access::write, device_access::read)
-			, layout_(layout)
 		{
 			allocate();
 		}

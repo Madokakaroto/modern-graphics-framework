@@ -24,16 +24,9 @@ namespace leaves { namespace pipeline
 	
 	public:
 		// constructor
-		vertex_buffer(string&& name, input_layout&& layout, size_t count)
+		vertex_buffer(string name, input_layout layout, size_t count)
 			: base_type(std::move(name), layout.size(), count, device_access::none, device_access::read)
 			, layout_(std::move(layout))
-		{
-			allocate();
-		}
-
-		vertex_buffer(string&& name, input_layout const& layout, size_t count)
-			: base_type(std::move(name), layout.size(), count, device_access::none, device_access::read)
-			, layout_(layout)
 		{
 			allocate();
 		}

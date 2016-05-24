@@ -23,7 +23,7 @@ namespace leaves { namespace pipeline
 	
 	public:
 		// construct
-		index_buffer(string&& name, primitive_type primitive, data_format format, size_t primitive_count)
+		index_buffer(string name, primitive_type primitive, data_format format, size_t primitive_count)
 			: base_type(
 				std::move(name), 
 				detail::size_of(format), 

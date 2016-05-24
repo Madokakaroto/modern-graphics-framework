@@ -59,7 +59,7 @@ namespace leaves { namespace pipeline
 		object& operator= (object&&) = default;
 
 	protected:
-		object(object_type type, string&& name) noexcept
+		object(object_type type, string name) noexcept
 			: type_(type)
 			, id_(invalid_handle())
 			, name_(std::move(name))

@@ -8,7 +8,7 @@ namespace leaves { namespace pipeline
 	class resource : public object
 	{
 	protected:
-		resource(object_type type, string&& name, size_t size, 
+		resource(object_type type, string name, size_t size, 
 			device_access cpu_access, device_access gpu_access) noexcept
 			: object(type, std::move(name))
 			, size_(size)

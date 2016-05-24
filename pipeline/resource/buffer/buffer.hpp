@@ -11,7 +11,7 @@ namespace leaves { namespace pipeline
 
 	protected:
 		buffer(
-			string&& name,				// resource name 
+			string name,				// resource name 
 			size_t elem_size,			// element size 
 			size_t elem_count,			// element count
 			device_access cpu_access,	// host access

@@ -158,7 +158,8 @@ namespace leaves { namespace pipeline
 			using helper_t = Helper;
 
 			static constexpr size_t count = traits_t::count;
-			static constexpr size_t numeric_size = numeric_traits_t::size();
+			static constexpr size_t numeric_size = count > 1 ? 
+				align<16>(numeric_traits_t::size()) * count : numeric_traits_t::size();
 			static constexpr size_t numeric_reg = numeric_traits_t::reg();
 
 			static constexpr bool new_four_component =
